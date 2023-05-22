@@ -1,0 +1,29 @@
+Modules:
+
+	login
+		id
+		userid
+		password
+		role
+		status
+
+1. Admin
+	
+
+2. Faculty
+
+
+3. Student
+	student_info
+		sid
+		firstname
+		lastname
+		gender
+		password
+		dob
+		admno
+		
+
+	attendance
+		
+	
