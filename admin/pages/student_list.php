@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    TROTZA | FACULTIES
+    TROTZA | STUDENTS
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -48,7 +48,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="faculty_list.php">
+          <a class="nav-link" href="faculty_list.php">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fa fa-user text-warning text-sm opacity-10"></i>
@@ -57,7 +57,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="student_list.php">
+          <a class="nav-link active" href="student_list.php">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fa fa-users text-success text-sm opacity-10"></i>
@@ -85,9 +85,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Faculties</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Student</li>
           </ol>
-          <h6 class="font-weight-bolder text-dark mb-0">Faculties</h6>
+          <h6 class="font-weight-bolder text-dark mb-0">Students</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <ul class="navbar-nav  ms-md-auto pe-md-3 d-flex align-items-center">
@@ -111,10 +111,10 @@
 
             <div class="card-header p-0 position-relative mt-n4 mx-4">
               <div class="d-flex justify-content-between bg-gradient-primary shadow-primary border-radius-lg p-3">
-                <h6 class="text-white ps-3 pt-2 text-uppercase">Faculty List</h6>
+                <h6 class="text-white ps-3 pt-2 text-uppercase">Student List</h6>
                 <button class="btn bg-gradient-dark m-0 toast-btn" type="button" data-toggle="modal"
                   data-target="#form"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add New
-                  Faculty</button>
+                  Student</button>
               </div>
             </div>
             <div class="card-body px-0 pt-3 pb-2">
@@ -142,7 +142,7 @@
                   </thead>
                   <tbody>
                     <!-- <?php
-                    // $query = "SELECT * FROM faculty";
+                    // $query = "SELECT * FROM student";
                     // $result = mysqli_query($conn, $query);
                     // while ($row = mysqli_fetch_array($result)) {
                     ?> -->
@@ -178,19 +178,19 @@
                         <a class="btn btn-link text-danger text-gradient px-3 mb-0"><i
                             class="fas fa-ban me-2"></i>Deactivate</a>
                         <!-- <a class="btn btn-link text-danger text-gradient px-3 mb-0"
-                            href="includes/facultydeactivate.php?id=<?php echo $row["fid"]; ?>"><i
+                            href="includes/studentdeactivate.php?id=<?php echo $row["sid"]; ?>"><i
                               class="material-icons text-sm me-2">delete</i>Deactivate</a> -->
 
                         <a class="btn btn-link text-dark px-3 mb-0" data-toggle="modal" data-target="#edit"
                           onclick=""><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
                         <!-- <a class="btn btn-link text-dark px-3 mb-0" data-toggle="modal" data-target="#edit"
-                            onclick="getData(<?php echo $row['fid']; ?>)"><i
+                            onclick="getData(<?php echo $row['sid']; ?>)"><i
                              class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a> -->
                         
                         <a class="btn btn-link text-dark px-3 mb-0"
                           onclick=""><i class="fas fa-trash-alt text-dark me-2"></i>Delete</a>
                         <!-- <a class="btn btn-link text-dark px-3 mb-0"
-                            href="includes/facultydelete.php?id=<?php echo $row["fid"]; ?>"><i
+                            href="includes/studentdelete.php?id=<?php echo $row["sid"]; ?>"><i
                               class="fas fa-trash-alt text-dark me-2"></i>Delete</a> -->
                       </td>
                     </tr>
