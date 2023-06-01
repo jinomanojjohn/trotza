@@ -92,7 +92,7 @@
           <a class="nav-link " href="marks.php">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-app text-info text-sm opacity-10"></i>
+              <i class="fa fa-certificate text-secondary text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Mark</span>
           </a>
@@ -101,9 +101,27 @@
           <a class="nav-link " href="fees.php">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-app text-info text-sm opacity-10"></i>
+              <i class="fa fa-money text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Fees</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="class.php">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-tasks text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Class</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="subject.php">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-book text-primary text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Subject</span>
           </a>
         </li>
       </ul>

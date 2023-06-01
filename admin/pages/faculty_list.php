@@ -1,3 +1,14 @@
+<?php
+include '../includes/connection.php';
+session_start(); // Start a new session
+
+// Check if the user is already logged in
+// if (!isset($_SESSION['admin_loggedin'])) {
+//     header("location: ../admin/"); // Redirect to dashboard if already logged in
+//     exit;
+// }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,13 +47,13 @@
           </button>
         </div>
 
-        <form action="includes/editfdata.php" method="POST" enctype="multipart/form-data"
+        <form action="../includes/editfdata.php" method="POST" enctype="multipart/form-data"
           onsubmit="return editValidate()">
 
           <div class="modal-body">
             <div id="errormsg2">
             </div>
-            <input type="hidden" name="id" id="eid">
+            <input type="hidden" name="id" id="fid">
             <div class="form-group">
               <label for="ename">Faculty Name</label>
               <input type="text" class="form-control px-2" id="ename" name="name" placeholder="Enter Name">
@@ -58,7 +69,7 @@
             </div>
             <div class="form-group">
               <label for="epass">Password</label>
-              <input type="password" class="form-control px-2" id="epass" name="pass" placeholder="Enter Password">
+              <input type="text" class="form-control px-2" id="epass" name="pass" placeholder="Enter Password">
             </div>
           </div>
           <div class="modal-footer border-top-0 d-flex justify-content-center">
@@ -124,7 +135,7 @@
           <a class="nav-link " href="marks.php">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-app text-info text-sm opacity-10"></i>
+              <i class="fa fa-certificate text-secondary text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Mark</span>
           </a>
@@ -133,9 +144,27 @@
           <a class="nav-link " href="fees.php">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-app text-info text-sm opacity-10"></i>
+              <i class="fa fa-money text-success text-sm opacity-10"></i>
             </div>
             <span class="nav-link-text ms-1">Fees</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="class.php">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-tasks text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Class</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="subject.php">
+            <div
+              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-book text-primary text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Subject</span>
           </a>
         </li>
       </ul>
@@ -162,7 +191,7 @@
             </li>
             <li class="nav-item d-flex align-items-center bg-danger mx-2 rounded">
               <button onclick="window.location.href='logout.php'" class="btn btn-md font-weight-bold text-white mb-0"><i
-                  class="fa fa-user me-sm-1"></i>&nbsp;&nbsp;Logout</button>
+                  class="fa fa-lock me-sm-1"></i>&nbsp;&nbsp;Logout</button>
             </li>
           </ul>
         </div>
@@ -202,54 +231,61 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- <?php
-                    // $query = "SELECT * FROM faculty";
-                    // $result = mysqli_query($conn, $query);
-                    // while ($row = mysqli_fetch_array($result)) {
-                    ?> -->
-                    <tr>
-                      <td class="align-middle text-center">
-                        <div class="d-flex flex-column ">
-                          <h6 class="mb-0 text-sm">
-                            <!-- <?php echo $row["name"]; ?> -->
-                            Riyas K H
-                          </h6>
-                        </div>
+                    <?php
+                    $query = "SELECT * FROM faculty_data inner join login on faculty_data.fid=login.id and login.type='faculty' where login.status!=2";
+                    $result = mysqli_query($conn, $query);
+                    while ($row = mysqli_fetch_array($result)) {
+                      ?>
+                      <tr>
+                        <td class="align-middle text-center">
+                          <div class="d-flex flex-column ">
+                            <h6 class="mb-0 text-sm">
+                              <?php echo $row["name"]; ?>
+                            </h6>
+                          </div>
 
-                      </td>
-                      <td class="align-middle text-center">
-                        <p class="font-weight-bold mb-0">
-                          <!-- <?php echo $row["email"]; ?> -->
-                          riyaskh123@gmail.com
-                        </p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <p class="font-weight-bold mb-0">
-                          <!-- <?php echo $row["mobile"]; ?> -->
-                          9834579324
-                        </p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <a class="btn btn-link text-danger text-gradient px-3 mb-0"><i
-                            class="fas fa-ban me-2"></i>Deactivate</a>
-                        <!-- <a class="btn btn-link text-danger text-gradient px-3 mb-0"
-                            href="includes/facultydeactivate.php?id=<?php echo $row["fid"]; ?>"><i
-                              class="material-icons text-sm me-2">delete</i>Deactivate</a> -->
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="font-weight-bold mb-0">
+                            <?php echo $row["email"]; ?>
+                          </p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="font-weight-bold mb-0">
+                            <?php echo $row["mobile"]; ?>
+                          </p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <?php
+                          if ($row["status"] == 1) {
+                            ?>
+                            <a class="btn btn-link text-danger text-gradient px-3 mb-0"
+                              href="../includes/fdeactivate.php?id=<?php echo $row["fid"]; ?> & d=0">
+                              <i class="fas fa-ban me-2"></i>Deactivate
+                            </a>
+                            <?php
+                          } else {
+                            ?>
+                            <a class="btn btn-link text-success text-gradient px-3 mb-0"
+                              href="../includes/fdeactivate.php?id=<?php echo $row["fid"]; ?> & d=1">
+                              <i class="fas fa-thumbs-up me-2"></i>Activate
+                            </a>
+                            <?php
+                          }
+                          ?>
 
-                        <a class="btn btn-link text-dark px-3 mb-0" type="button" data-toggle="modal"
-                          data-target="#edit" onclick="getData() "><i
-                            class="fas fa-pencil-alt text-dark me-2"></i>Edit</a>
+                          <a class="btn btn-link text-dark px-3 mb-0" type="button" data-toggle="modal"
+                            data-target="#edit" onclick="getData(<?php echo $row['fid']; ?>) "><i
+                              class="fas fa-pencil-alt text-dark me-2"></i>Edit</a>
 
-                        <a class="btn btn-link text-dark px-3 mb-0" onclick=""><i
-                            class="fas fa-trash-alt text-dark me-2"></i>Delete</a>
-                        <!-- <a class="btn btn-link text-dark px-3 mb-0"
-                            href="includes/facultydelete.php?id=<?php echo $row["fid"]; ?>"><i
-                              class="fas fa-trash-alt text-dark me-2"></i>Delete</a> -->
-                      </td>
-                    </tr>
-                    <!-- <?php
-                    // }
-                    ?> -->
+                          <a class="btn btn-link text-dark px-3 mb-0"
+                            href="../includes/fdeactivate.php?id=<?php echo $row["fid"]; ?> & d=2"><i
+                              class="fas fa-trash-alt text-dark me-2"></i>Delete</a>
+                        </td>
+                      </tr>
+                      <?php
+                    }
+                    ?>
                   </tbody>
                 </table>
               </div>
@@ -271,7 +307,8 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="includes/fdata.php" method="POST" enctype="multipart/form-data" onsubmit="return formValidate()">
+        <form action="../includes/fdata.php" method="POST" enctype="multipart/form-data"
+          onsubmit="return formValidate()">
 
           <div class="modal-body">
             <div id="errormsg">
@@ -363,24 +400,32 @@
       }
     }
 
-    function getData() {
-
+    function getData(id) {
       const name = document.getElementById('ename');
       const email = document.getElementById('eemail');
       const mobile = document.getElementById('emobile');
-      const pass = document.getElementById('epass');
+      const fid = document.getElementById('fid');
+      // const pass = document.getElementById('epass');
 
       $.ajax({
-        url: "includes/getfdata.php?id=" + id,
+        url: "../includes/getfdata.php",
         type: "GET",
+        data: { id: id },
         success: function (data) {
-          var data = JSON.parse(data);
-          name.value = data[0].name;
-          email.value = data[0].email;
-          mobile.value = data[0].mobile;
-          pass.value = data[0].password;
-          //console.log(data);
-          //$('#table').html(data);
+          var parsedData = JSON.parse(data);
+          if (parsedData.length > 0) {
+            fid.value = parsedData[0].fid;
+            name.value = parsedData[0].name;
+            email.value = parsedData[0].email;
+            mobile.value = parsedData[0].mobile;
+            // pass.value = parsedData[0].password;
+            console.log(parsedData);
+          } else {
+            console.log("No data found for the specified ID.");
+          }
+        },
+        error: function () {
+          console.log("Error occurred during the AJAX request.");
         }
       });
     }
