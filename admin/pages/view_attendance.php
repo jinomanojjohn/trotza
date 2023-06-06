@@ -58,7 +58,6 @@ $class = $_REQUEST['class'];
         </nav>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
-            <form action="../includes/attendance.php" method="POST">
                 <div class="row">
                     <div class="col-12">
                         <div class="card mb-4">
@@ -100,10 +99,8 @@ $class = $_REQUEST['class'];
                                                     <td class="align-middle text-center nowrap font-weight-bolder mb-0 ">
                                                         <?php echo $row["name"]; ?>
                                                     </td>
-                                                    <td class="align-middle text-center">
-                                                        <p class="<?php if($row['status'] == 1) echo "text-success"; else echo "text-danger";?> font-weight-bolder">
-                                                            <?php if($row['status'] == 1) echo 'Present'; else echo 'Absent'; ?>
-                                                        <p>
+                                                    <td class="align-middle text-center font-weight-bolder <?php if($row['status'] == 1) echo "text-success"; else echo "text-danger";?>">
+                                                        <?php if($row['status'] == 1) echo 'Present'; else echo 'Absent'; ?>
                                                     </td>
                                                 </tr>
                                             <?php
@@ -116,7 +113,6 @@ $class = $_REQUEST['class'];
                         </div>
                     </div>
                 </div>
-            </form>
         </div>
     </main>
 

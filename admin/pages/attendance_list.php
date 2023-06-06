@@ -162,9 +162,9 @@ session_start(); // Start a new session
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Faculties</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Attendance</li>
           </ol>
-          <h6 class="font-weight-bolder text-dark mb-0">Faculties</h6>
+          <h6 class="font-weight-bolder text-dark mb-0">Attendance</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <ul class="navbar-nav  ms-md-auto pe-md-3 d-flex align-items-center">
@@ -186,7 +186,7 @@ session_start(); // Start a new session
 
             <div class="card-header p-0 position-relative mt-n4 mx-4">
               <div class="d-flex justify-content-between bg-gradient-primary shadow-primary border-radius-lg p-3">
-                <h6 class="text-white ps-3 pt-2 text-uppercase">Faculty List</h6>
+                <h6 class="text-white ps-3 pt-2 text-uppercase">Attendance List</h6>
                 <button class="btn bg-gradient-dark m-0 toast-btn" type="button" data-toggle="modal" data-target="#form"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add New Attendance</button>
               </div>
             </div>
@@ -265,7 +265,7 @@ session_start(); // Start a new session
 
             <div class="form-group">
               <label for="name">Date</label>
-              <input type="date" class="form-control" id="atdate" name="dt" value="<?php echo date('Y-m-d'); ?>">
+              <input type="date" class="form-control" id="atdate" name="dt" value="<?php echo date('Y-m-d'); ?>" min="2023-01-01" max="2023-12-31">
             </div>
             <div class="form-group">
               <label for="email">class</label>
@@ -307,6 +307,20 @@ session_start(); // Start a new session
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+
+    var maxDate = year + '-' + month + '-' + day;
+    document.getElementById("atdate").max = maxDate;
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
