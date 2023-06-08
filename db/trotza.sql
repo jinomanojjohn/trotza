@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2023 at 10:28 AM
--- Server version: 10.5.19-MariaDB
+-- Generation Time: Jun 08, 2023 at 12:38 PM
+-- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -39,7 +39,8 @@ CREATE TABLE `attendance_child` (
 --
 
 INSERT INTO `attendance_child` (`acid`, `sid`, `mid`, `status`) VALUES
-(2, 1, 2, 0);
+(1, 1, 1, 1),
+(2, 2, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -59,7 +60,7 @@ CREATE TABLE `attendance_master` (
 --
 
 INSERT INTO `attendance_master` (`aid`, `adate`, `class`, `fid`) VALUES
-(2, '2023-06-04', 1, 1);
+(1, '2023-06-06', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -69,15 +70,18 @@ INSERT INTO `attendance_master` (`aid`, `adate`, `class`, `fid`) VALUES
 
 CREATE TABLE `class` (
   `cid` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL
+  `clname` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `class`
 --
 
-INSERT INTO `class` (`cid`, `name`) VALUES
-(1, '1');
+INSERT INTO `class` (`cid`, `clname`) VALUES
+(1, '1'),
+(2, '12'),
+(3, '8'),
+(4, '7');
 
 -- --------------------------------------------------------
 
@@ -119,7 +123,9 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`id`, `username`, `password`, `type`, `status`) VALUES
-(2, 'riyas123@gmail.com', 'abc', 'faculty', 1);
+(2, 'riyas123@gmail.com', 'abc', 'faculty', 1),
+(1, '9823351842', '2146545135', 'student', 1),
+(2, '9845628498', '9845628498', 'student', 1);
 
 -- --------------------------------------------------------
 
@@ -144,7 +150,9 @@ CREATE TABLE `mark_child` (
 CREATE TABLE `mark_master` (
   `markid` int(11) NOT NULL,
   `sid` int(11) NOT NULL,
-  `date` date NOT NULL
+  `date` date NOT NULL,
+  `fid` int(11) NOT NULL,
+  `class` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -157,11 +165,11 @@ CREATE TABLE `student_data` (
   `sid` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `class` varchar(100) NOT NULL,
-  `mobile` int(15) NOT NULL,
+  `mobile` int(11) NOT NULL,
   `school` varchar(100) NOT NULL,
   `board` varchar(100) NOT NULL,
   `pname` varchar(100) NOT NULL,
-  `pmobile` int(15) NOT NULL
+  `pmobile` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -169,7 +177,8 @@ CREATE TABLE `student_data` (
 --
 
 INSERT INTO `student_data` (`sid`, `name`, `class`, `mobile`, `school`, `board`, `pname`, `pmobile`) VALUES
-(1, 'Muhammed Riyas', '1', 871491484, 'ABC', 'DEF', 'SSDDS', 987654321);
+(1, 'RiyasKH', '2', 2146545135, 'Al Ameen', 'State', 'KH', 2147483647),
+(2, 'Jino Joha', '2', 2147483647, 'Al Ameen School', 'CBSE', 'MANOJ', 2147483647);
 
 -- --------------------------------------------------------
 
@@ -184,6 +193,14 @@ CREATE TABLE `subject` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `subject`
+--
+
+INSERT INTO `subject` (`subid`, `subname`, `cid`) VALUES
+(1, 'Chemistry', 2),
+(2, 'History', 3);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -191,8 +208,7 @@ CREATE TABLE `subject` (
 -- Indexes for table `attendance_child`
 --
 ALTER TABLE `attendance_child`
-  ADD PRIMARY KEY (`acid`),
-  ADD KEY `mid` (`mid`);
+  ADD PRIMARY KEY (`acid`);
 
 --
 -- Indexes for table `attendance_master`
@@ -238,19 +254,19 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `attendance_child`
 --
 ALTER TABLE `attendance_child`
-  MODIFY `acid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `acid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `attendance_master`
 --
 ALTER TABLE `attendance_master`
-  MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `faculty_data`
@@ -268,23 +284,13 @@ ALTER TABLE `mark_master`
 -- AUTO_INCREMENT for table `student_data`
 --
 ALTER TABLE `student_data`
-  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `sid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subid` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `attendance_child`
---
-ALTER TABLE `attendance_child`
-  ADD CONSTRAINT `attendance_child_ibfk_1` FOREIGN KEY (`mid`) REFERENCES `attendance_master` (`aid`) ON DELETE CASCADE ON UPDATE CASCADE;
+  MODIFY `subid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
