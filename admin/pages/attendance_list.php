@@ -35,48 +35,6 @@ session_start(); // Start a new session
 <body class="g-sidenav-show   bg-gray-100">
   <!-- <div class="min-height-150 bg-primary position-absolute w-100"></div> -->
 
-  <!-- Modal -->
-  <div class="modal fade" id="edit" tabdashboard="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header border-bottom-0">
-          <h5 class="modal-title" id="exampleModalLabel">Edit Faculty details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-        <form action="../includes/editfdata.php" method="POST" enctype="multipart/form-data" onsubmit="return editValidate()">
-
-          <div class="modal-body">
-            <div id="errormsg2">
-            </div>
-            <input type="hidden" name="id" id="fid">
-            <div class="form-group">
-              <label for="ename">Faculty Name</label>
-              <input type="text" class="form-control px-2" id="ename" name="name" placeholder="Enter Name">
-            </div>
-            <div class="form-group">
-              <label for="eemail">Email</label>
-              <input type="email" class="form-control px-2" id="eemail" name="email" placeholder="Enter Email Address">
-            </div>
-            <div class="form-group">
-              <label for="emobile">Mobile Number</label>
-              <input type="mobile" class="form-control px-2" id="emobile" name="mobile" placeholder="Enter Mobile Number">
-            </div>
-            <div class="form-group">
-              <label for="epass">Password</label>
-              <input type="text" class="form-control px-2" id="epass" name="pass" placeholder="Enter Password">
-            </div>
-          </div>
-          <div class="modal-footer border-top-0 d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
     <div class="sidenav-header">
       <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
@@ -97,7 +55,7 @@ session_start(); // Start a new session
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="faculty_list.php">
+          <a class="nav-link " href="faculty_list.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="fa fa-user text-warning text-sm opacity-10"></i>
             </div>
@@ -113,7 +71,7 @@ session_start(); // Start a new session
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="attendance.php">
+          <a class="nav-link active" href="attendance_list.php">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-app text-info text-sm opacity-10"></i>
             </div>
@@ -162,9 +120,9 @@ session_start(); // Start a new session
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Faculties</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Attendance</li>
           </ol>
-          <h6 class="font-weight-bolder text-dark mb-0">Faculties</h6>
+          <h6 class="font-weight-bolder text-dark mb-0">Attendance</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <ul class="navbar-nav  ms-md-auto pe-md-3 d-flex align-items-center">
@@ -186,7 +144,7 @@ session_start(); // Start a new session
 
             <div class="card-header p-0 position-relative mt-n4 mx-4">
               <div class="d-flex justify-content-between bg-gradient-primary shadow-primary border-radius-lg p-3">
-                <h6 class="text-white ps-3 pt-2 text-uppercase">Faculty List</h6>
+                <h6 class="text-white ps-3 pt-2 text-uppercase">Attendance List</h6>
                 <button class="btn bg-gradient-dark m-0 toast-btn" type="button" data-toggle="modal" data-target="#form"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add New Attendance</button>
               </div>
             </div>
@@ -231,7 +189,7 @@ session_start(); // Start a new session
                         </td>
                         <td>
                           <a class="btn btn-link text-dark px-3 mb-0" type="button" href="edit_attendance.php?aid=<?php echo $row["aid"]; ?>&dt=<?php echo $row["adate"]; ?>&&class=<?php echo $row["class"]; ?>"><i class="fas fa-pencil-alt text-dark me-2"></i>Edit</a>
-                          <a class="btn btn-link text-dark px-3 mb-0" href="view_attendance.php?aid=<?php echo $row["aid"]; ?>&dt=<?php echo $row["adate"]; ?>&&class=<?php echo $row["class"]; ?>"><i class="fas fa-trash-alt text-dark me-2"></i>View</a>
+                          <a class="btn btn-link text-dark px-3 mb-0" href="view_attendance.php?aid=<?php echo $row["aid"]; ?>&dt=<?php echo $row["adate"]; ?>&&class=<?php echo $row["class"]; ?>"><i class="fas fa-eye text-dark me-2"></i>View</a>
                         </td>
                       </tr>
                     <?php
@@ -268,14 +226,14 @@ session_start(); // Start a new session
               <input type="date" class="form-control" id="atdate" name="dt" value="<?php echo date('Y-m-d'); ?>">
             </div>
             <div class="form-group">
-              <label for="email">class</label>
+              <label for="email">Class</label>
               <select name="class" id="class" class="form-control" placeholder="select class">
                 <option value="0">Select Class</option>
                 <?php
                 $result1 = mysqli_query($conn, "select * from class");
                 while ($row = mysqli_fetch_array($result1)) {
                 ?>
-                  <option value="<?php echo $row['cid']; ?>"><?php echo $row['name']; ?></option>
+                  <option value="<?php echo $row['cid']; ?>"><?php echo $row['clname']; ?></option>
                 <?php
                 }
                 ?>
@@ -330,38 +288,6 @@ session_start(); // Start a new session
         alert("please select class")
         return false;
       }
-    }
-
-    function getData(id) {
-      const name = document.getElementById('ename');
-      const email = document.getElementById('eemail');
-      const mobile = document.getElementById('emobile');
-      const fid = document.getElementById('fid');
-      // const pass = document.getElementById('epass');
-
-      $.ajax({
-        url: "../includes/getfdata.php",
-        type: "GET",
-        data: {
-          id: id
-        },
-        success: function(data) {
-          var parsedData = JSON.parse(data);
-          if (parsedData.length > 0) {
-            fid.value = parsedData[0].fid;
-            name.value = parsedData[0].name;
-            email.value = parsedData[0].email;
-            mobile.value = parsedData[0].mobile;
-            // pass.value = parsedData[0].password;
-            console.log(parsedData);
-          } else {
-            console.log("No data found for the specified ID.");
-          }
-        },
-        error: function() {
-          console.log("Error occurred during the AJAX request.");
-        }
-      });
     }
   </script>
 </body>

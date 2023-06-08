@@ -11,7 +11,7 @@ $query = "UPDATE faculty_data set name='$name', email='$email', mobile='$mobile'
 $query2 = "UPDATE login SET password = '$password' WHERE id = $id and type = 'faculty'";
 if (mysqli_query($conn, $query) && mysqli_query($conn, $query2)) {
     // echo "Record updated successfully";
-    echo "<script>alert('Record updated successfully');window.location.href='../pages/faculty_list.php';</script>";
+    echo "<script>window.location.href='../pages/faculty_list.php';</script>";
 } else {
     echo "Error updating record: " . mysqli_error($conn);
 }

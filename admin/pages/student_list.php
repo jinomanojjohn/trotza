@@ -1,3 +1,13 @@
+<?php
+include '../includes/connection.php';
+session_start(); // Start a new session
+
+// Check if the user is already logged in
+// if (!isset($_SESSION['admin_loggedin'])) {
+//     header("location: ../admin/"); // Redirect to dashboard if already logged in
+//     exit;
+// }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,20 +46,30 @@
           </button>
         </div>
 
-        <form action="includes/editstudata.php" method="POST" enctype="multipart/form-data"
+        <form action="../includes/editstudata.php" method="POST" enctype="multipart/form-data"
           onsubmit="return editValidate()">
 
           <div class="modal-body">
             <div id="errormsg2">
             </div>
-            <input type="hidden" name="id" id="eid">
+            <input type="hidden" name="id" id="sid">
             <div class="form-group">
               <label for="ename">Student Name</label>
               <input type="text" class="form-control px-2" id="ename" name="name" placeholder="Enter Name">
             </div>
             <div class="form-group">
-              <label for="eclass">Student Class</label>
-              <input type="text" class="form-control px-2" id="eclass" name="classs" placeholder="Enter Class">
+              <label for="eclasss">class</label>
+              <select name="eclasss" id="eclasss" class="form-control" placeholder="Select Class">
+                <option value="0">Select Class</option>
+                <?php
+                $result1 = mysqli_query($conn, "select * from class");
+                while ($row = mysqli_fetch_array($result1)) {
+                  ?>
+                  <option value="<?php echo $row['cid']; ?>"><?php echo $row['clname']; ?></option>
+                  <?php
+                }
+                ?>
+              </select>
             </div>
             <div class="form-group">
               <label for="emobile">Student Mobile Number</label>
@@ -125,7 +145,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="attendance.php">
+          <a class="nav-link " href="attendance_list.php">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-app text-info text-sm opacity-10"></i>
@@ -246,78 +266,86 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- <?php
-                    // $query = "SELECT * FROM student";
-                    // $result = mysqli_query($conn, $query);
-                    // while ($row = mysqli_fetch_array($result)) {
-                    ?> -->
-                    <tr>
-                      <td class="align-middle text-center">
-                        <div class="d-flex flex-column ">
-                          <h6 class="mb-0 text-sm">
-                            <!-- <?php echo $row["name"]; ?> -->
-                            Riyas K H
-                          </h6>
-                        </div>
+                    <?php
+                    $query = "SELECT student_data.*, class.clname, login.status
+                    FROM student_data
+                    INNER JOIN login ON student_data.sid = login.id
+                    INNER JOIN class ON student_data.class = class.cid
+                    WHERE login.type = 'student' AND login.status != 2";
+                    $result = mysqli_query($conn, $query);
+                    while ($row = mysqli_fetch_array($result)) {
+                      $className = $row["clname"];
+                      ?>
+                      <tr>
+                        <td class="align-middle text-center">
+                          <div class="d-flex flex-column ">
+                            <h6 class="mb-0 text-sm">
+                              <?php echo $row["name"]; ?>
+                            </h6>
+                          </div>
 
-                      </td>
-                      <td class="align-middle text-center">
-                        <p class="text-xs font-weight-bold mb-0">
-                          <!-- <?php echo $row["class"]; ?> -->
-                          12
-                        </p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <p class="text-xs font-weight-bold mb-0">
-                          <!-- <?php echo $row["mobile"]; ?> -->
-                          9834579324
-                        </p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <p class="text-xs font-weight-bold mb-0">
-                          <!-- <?php echo $row["school"]; ?> -->
-                          Al-Ameen Public School
-                        </p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <p class="text-xs font-weight-bold mb-0">
-                          <!-- <?php echo $row["board"]; ?> -->
-                          State
-                        </p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <p class="text-xs font-weight-bold mb-0">
-                          <!-- <?php echo $row["parent"]; ?> -->
-                          Shahrukh Khan
-                        </p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <p class="text-xs font-weight-bold mb-0">
-                          <!-- <?php echo $row["pnumber"]; ?> -->
-                          8632149524
-                        </p>
-                      </td>
-                      <td class="align-middle text-center">
-                        <a class="btn btn-link text-danger text-gradient px-3 mb-0"><i
-                            class="fas fa-ban me-2"></i>Deactivate</a>
-                        <!-- <a class="btn btn-link text-danger text-gradient px-3 mb-0"
-                            href="includes/studentdeactivate.php?id=<?php echo $row["sid"]; ?>"><i
-                              class="material-icons text-sm me-2">delete</i>Deactivate</a> -->
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="text-xs font-weight-bold mb-0">
+                            <?php echo $className ?>
+                          </p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="text-xs font-weight-bold mb-0">
+                            <?php echo $row["mobile"]; ?>
+                          </p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="text-xs font-weight-bold mb-0">
+                            <?php echo $row["school"]; ?>
+                          </p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="text-xs font-weight-bold mb-0">
+                            <?php echo $row["board"]; ?>
+                          </p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="text-xs font-weight-bold mb-0">
+                            <?php echo $row["pname"]; ?>
+                          </p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <p class="text-xs font-weight-bold mb-0">
+                            <?php echo $row["pmobile"]; ?>
+                          </p>
+                        </td>
+                        <td class="align-middle text-center">
+                          <?php
+                          if ($row["status"] == 1) {
+                            ?>
+                            <a class="btn btn-link text-danger text-gradient px-3 mb-0"
+                              href="../includes/sdeactivate.php?id=<?php echo $row["sid"]; ?> & d=0">
+                              <i class="fas fa-ban me-2"></i>Deactivate
+                            </a>
+                            <?php
+                          } else {
+                            ?>
+                            <a class="btn btn-link text-success text-gradient px-3 mb-0"
+                              href="../includes/sdeactivate.php?id=<?php echo $row["sid"]; ?> & d=1">
+                              <i class="fas fa-thumbs-up me-2"></i>Activate
+                            </a>
+                            <?php
+                          }
+                          ?>
 
-                        <a class="btn btn-link text-dark px-3 mb-0" type="button" data-toggle="modal"
-                          data-target="#edit" onclick="getData(<?php echo $row['sid']; ?>) "><i
-                            class="fas fa-pencil-alt text-dark me-2"></i>Edit</a>
+                          <a class="btn btn-link text-dark px-3 mb-0" type="button" data-toggle="modal"
+                            data-target="#edit" onclick="getData(<?php echo $row['sid']; ?>) "><i
+                              class="fas fa-pencil-alt text-dark me-2"></i>Edit</a>
 
-                        <a class="btn btn-link text-dark px-3 mb-0" onclick=""><i
-                            class="fas fa-trash-alt text-dark me-2"></i>Delete</a>
-                        <!-- <a class="btn btn-link text-dark px-3 mb-0"
-                            href="includes/studentdelete.php?id=<?php echo $row["sid"]; ?>"><i
-                              class="fas fa-trash-alt text-dark me-2"></i>Delete</a> -->
-                      </td>
-                    </tr>
-                    <!-- <?php
-                    // }
-                    ?> -->
+                          <a class="btn btn-link text-dark px-3 mb-0"
+                            href="../includes/sdeactivate.php?id=<?php echo $row["sid"]; ?> & d=2"><i
+                              class="fas fa-trash-alt text-dark me-2"></i>Delete</a>
+                        </td>
+                      </tr>
+                      <?php
+                    }
+                    ?>
                   </tbody>
                 </table>
               </div>
@@ -339,7 +367,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="includes/studata.php" method="POST" enctype="multipart/form-data"
+        <form action="../includes/studata.php" method="POST" enctype="multipart/form-data"
           onsubmit="return formValidate()">
 
           <div class="modal-body">
@@ -352,8 +380,19 @@
               <input type="text" class="form-control" id="name" name="name" placeholder="Enter Student Name">
             </div>
             <div class="form-group">
-              <label for="class">Class</label>
-              <input type="text" class="form-control" id="classs" name="classs" placeholder="Enter Class">
+              <label for="classs">class</label>
+              <select name="classs" id="classs" class="form-control" placeholder="Select Class">
+                <option value="0">Select Class</option>
+                <?php
+                $result1 = mysqli_query($conn, "select * from class");
+                while ($row = mysqli_fetch_array($result1)) {
+                  ?>
+                  <option value="<?php echo $row['cid']; ?>"><?php echo $row['clname']; ?></option>
+                  <?php
+                }
+                ?>
+
+              </select>
             </div>
             <div class="form-group">
               <label for="mobile">Mobile Number</label>
@@ -378,6 +417,7 @@
             <div class=" modal-footer border-top-0 d-flex justify-content-center">
               <button type="submit" class="btn btn-primary">Submit</button>
             </div>
+          </div>
         </form>
 
       </div>
@@ -419,8 +459,8 @@
   <script>
     const formValidate = () => {
       name = document.getElementById('name');
-      classs = document.getElementById('classs');
       mobile = document.getElementById('mobile');
+      cls = document.getElementById('classs');
       school = document.getElementById('school');
       board = document.getElementById('board');
       parent = document.getElementById('parent');
@@ -430,14 +470,14 @@
         document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Name is required</span></div>"
         return false;
       }
-      if (classs.value == "") {
-        classs.focus();
-        document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Class is required</span></div>"
-        return false;
-      }
       if (mobile.value == "" && mobile.value.length != 10) {
         mobile.focus();
         document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Mobile Number is required</span></div>"
+        return false;
+      }
+      if (cls.value == 0) {
+        cls.focus();
+        document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Please Select Class</span></div>"
         return false;
       }
       if (school.value == "") {
@@ -462,30 +502,39 @@
       }
     }
 
-    function getData() {
-      const id = document.getElementById('id').value;
+    function getData(id) {
+      const sid = document.getElementById('sid');
       const name = document.getElementById('ename');
       const classs = document.getElementById('eclasss');
       const mobile = document.getElementById('emobile');
       const school = document.getElementById('eschool');
       const board = document.getElementById('eboard');
       const parent = document.getElementById('eparent');
-      const pnumber = document.getElementById('epnumber');
+      const pnumber = document.getElementById('epmobile');
 
       $.ajax({
-        url: "includes/getfdata.php?id=" + id,
+        url: "../includes/getsdata.php",
         type: "GET",
+        data: {
+          id: id
+        },
         success: function (data) {
-          var data = JSON.parse(data);
-          name.value = data.name;
-          classs.value = data.classs;
-          mobile.value = data.mobile;
-          school.value = data.school;
-          board.value = data.board;
-          parent.value = data.parent;
-          pnumber.value = data.pnumber;
-          //console.log(data);
-          //$('#table').html(data);
+          var parsedData = JSON.parse(data);
+          if (parsedData.length > 0) {
+            sid.value = parsedData[0].sid;
+            name.value = parsedData[0].name;
+            classs.value = parsedData[0].classs;
+            mobile.value = parsedData[0].mobile;
+            school.value = parsedData[0].school;
+            board.value = parsedData[0].board;
+            parent.value = parsedData[0].pname;
+            pnumber.value = parsedData[0].pmobile;
+          } else {
+            alert("No data found");
+          }
+        },
+        error: function () {
+          alert("Something went wrong");
         }
       });
     }
@@ -497,7 +546,7 @@
       const school = document.getElementById('eschool');
       const board = document.getElementById('eboard');
       const parent = document.getElementById('eparent');
-      const pnumber = document.getElementById('epnumber');
+      const pnumber = document.getElementById('epmobile');
       if (name.value == "") {
         name.focus();
         document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Name is required</span></div>"

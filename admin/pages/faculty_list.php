@@ -123,7 +123,7 @@ session_start(); // Start a new session
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="attendance.php">
+          <a class="nav-link " href="attendance_list.php">
             <div
               class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
               <i class="ni ni-app text-info text-sm opacity-10"></i>
@@ -419,7 +419,7 @@ session_start(); // Start a new session
             email.value = parsedData[0].email;
             mobile.value = parsedData[0].mobile;
             // pass.value = parsedData[0].password;
-            console.log(parsedData);
+            // console.log(parsedData);
           } else {
             console.log("No data found for the specified ID.");
           }
