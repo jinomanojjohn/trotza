@@ -223,7 +223,7 @@ session_start(); // Start a new session
 
             <div class="form-group">
               <label for="name">Date</label>
-              <input type="date" class="form-control" id="atdate" name="dt" value="<?php echo date('Y-m-d'); ?>">
+              <input type="date" class="form-control" id="atdate" name="dt" value="<?php echo date('Y-m-d'); ?>" min="2023-01-01" max="2023-12-31">
             </div>
             <div class="form-group">
               <label for="email">Class</label>
@@ -265,6 +265,20 @@ session_start(); // Start a new session
       }
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+
+    var maxDate = year + '-' + month + '-' + day;
+    document.getElementById("atdate").max = maxDate;
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
