@@ -179,7 +179,7 @@ session_start(); // Start a new session
                                                 Date</th>
                                             <th class="text-center text-uppercase text-secondary font-weight-bolder opacity-7 ps-2"
                                                 style="width: 25%;">
-                                                Student</th>
+                                                Class</th>
                                             <th class="text-center text-uppercase text-secondary font-weight-bolder opacity-7 ps-2 th-sm"
                                                 style="width: 25%;">
                                                 Faculty</th>
@@ -190,7 +190,7 @@ session_start(); // Start a new session
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $query = "SELECT mm.markid,mm.date,mm.sid,mm.class,fd.name,sd.name FROM mark_master mm inner join faculty_data fd on mm.fid=fd.fid inner join student_data sd on mm.sid=sd.sid";
+                                        $query = "SELECT mm.markid,mm.date,mm.class,fd.name FROM mark_master mm inner join faculty_data fd on mm.fid=fd.fid";
                                         $result = mysqli_query($conn, $query);
                                         while ($row = mysqli_fetch_array($result)) {
                                             ?>
@@ -198,26 +198,26 @@ session_start(); // Start a new session
                                                 <td class="align-middle text-center">
                                                     <div class="d-flex flex-column ">
                                                         <h6 class="mb-0 text-sm">
-                                                            <?php echo $row["mm.date"]; ?>
+                                                            <?php echo $row["date"]; ?>
                                                         </h6>
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <p class="font-weight-bold mb-0">
-                                                        <?php echo $row["sd.name"]; ?>
+                                                        <?php echo $row["class"]; ?>
                                                     </p>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <p class="font-weight-bold mb-0">
-                                                        <?php echo $row["fd.name"]; ?>
+                                                        <?php echo $row["name"]; ?>
                                                     </p>
                                                 </td>
                                                 <td>
                                                     <a class="btn btn-link text-dark px-3 mb-0" type="button"
-                                                        href="edit_mark.php?markid=<?php echo $row["markid"]; ?>&dt=<?php echo $row["mm.date"]; ?>&&class=<?php echo $row["mm.class"]; ?>"><i
+                                                        href="edit_mark.php?markid=<?php echo $row["markid"]; ?>&dt=<?php echo $row["date"]; ?>&&class=<?php echo $row["class"]; ?>"><i
                                                             class="fas fa-pencil-alt text-dark me-2"></i>Edit</a>
                                                     <a class="btn btn-link text-dark px-3 mb-0"
-                                                        href="view_mark.php?aid=<?php echo $row["markid"]; ?>&dt=<?php echo $row["mm.date"]; ?>&&class=<?php echo $row["mm.class"]; ?>"><i
+                                                        href="view_mark.php?aid=<?php echo $row["markid"]; ?>&dt=<?php echo $row["date"]; ?>&&class=<?php echo $row["class"]; ?>"><i
                                                             class="fas fa-eye text-dark me-2"></i>View</a>
                                                 </td>
                                             </tr>
@@ -278,7 +278,7 @@ session_start(); // Start a new session
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="marklist_mark.php" method="POST" enctype="multipart/form-data"
+                <form action="add_mark.php" method="POST" enctype="multipart/form-data"
                     onsubmit="return formValidate()">
                     <div class="modal-body">
                         <div id="errormsg">
@@ -290,28 +290,13 @@ session_start(); // Start a new session
                         </div>
                         <div class="form-group">
                             <label for="class">Class</label>
-                            <select name="class" id="class" class="form-control" placeholder="select class">
+                            <select name="class" id="class" name="class" class="form-control" placeholder="select class">
                                 <option value="0">Select Class</option>
                                 <?php
                                 $result1 = mysqli_query($conn, "select * from class");
                                 while ($row = mysqli_fetch_array($result1)) {
                                     ?>
                                     <option value="<?php echo $row['cid']; ?>"><?php echo $row['clname']; ?></option>
-                                    <?php
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="stuname">Student</label>
-                            <select name="stuname" id="stuname" class="form-control" placeholder="select Student Name">
-                                <option value="0">Select Student</option>
-                                <?php
-                                $selectedClass = $_POST['class'];
-                                $result2 = mysqli_query($conn, "SELECT * FROM student_data WHERE class = $selectedClass");
-                                while ($row = mysqli_fetch_array($result2)) {
-                                    ?>
-                                    <option value="<?php echo $row['sid']; ?>"><?php echo $row['name']; ?></option>
                                     <?php
                                 }
                                 ?>
