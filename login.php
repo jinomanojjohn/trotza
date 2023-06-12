@@ -28,7 +28,7 @@ session_start();
               {
                   $_SESSION['LoginStudent']=$row['id'];
                   $_SESSION['UserType']=$row['type'];
-                  header('Location: student/index.php');
+                  header('Location: index.php');
               }
           }
       }
