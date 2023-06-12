@@ -399,7 +399,7 @@ session_start(); // Start a new session
             <div class="form-group py-0 my-0">
               <label for="classs">class</label>
               <select name="classs" id="classs" class="form-control" placeholder="Select Class">
-                <option value="0">Select Class</option>
+                <option selected value="0">Select Class</option>
                 <?php
                 $result1 = mysqli_query($conn, "select * from class");
                 while ($row = mysqli_fetch_array($result1)) {
@@ -548,12 +548,19 @@ session_start(); // Start a new session
             sid.value = parsedData[0].sid;
             name.value = parsedData[0].name;
             email.value =parsedData[0].email
-            classs.value = parsedData[0].classs;
+            //classs.value = parsedData[0].classs;
             mobile.value = parsedData[0].mobile;
             school.value = parsedData[0].school;
             board.value = parsedData[0].board;
             parent.value = parsedData[0].pname;
             pnumber.value = parsedData[0].pmobile;
+            for(var i, j = 0; i = classs.options[j]; j++) {
+              if(i.value == parsedData[0].class) {
+                classs.selectedIndex = j;
+                break;
+              }
+            }
+
           } else {
             alert("No data found");
           }
