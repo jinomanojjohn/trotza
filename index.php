@@ -47,7 +47,7 @@ if(isset($_SESSION['LoginStudent'])){
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="active" href="index.html">Home</a></li>
+          <li><a class="active" href="index.php">Home</a></li>
           <li><a href="student/attendance.php">Attendance</a></li>
           <li><a href="student/marks.php">Marks</a></li>
           
@@ -58,6 +58,14 @@ if(isset($_SESSION['LoginStudent'])){
 
     </div>
   </header><!-- End Header -->
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex justify-content-center align-items-center">
+    <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
+      <h1>Learning Today,<br>Leading Tomorrow</h1>
+      <h2>We are team of talented designers making websites with Bootstrap</h2>
+      <a href="courses.html" class="btn-get-started">Get Started</a>
+    </div>
+  </section><!-- End Hero -->
 <?php 
 }
 else
@@ -73,7 +81,7 @@ else
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="active" href="index.html">Home</a></li>
+          <li><a class="active" href="index.php">Home</a></li>
 
           
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -83,9 +91,6 @@ else
 
     </div>
   </header><!-- End Header -->
-<?php
-}
-?>
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex justify-content-center align-items-center">
     <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
@@ -94,8 +99,9 @@ else
       <a href="courses.html" class="btn-get-started">Get Started</a>
     </div>
   </section><!-- End Hero -->
-
-
+<?php
+}
+?>
   <!-- Vendor JS Files -->
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
