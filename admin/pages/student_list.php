@@ -49,15 +49,19 @@ session_start(); // Start a new session
         <form action="../includes/editstudata.php" method="POST" enctype="multipart/form-data"
           onsubmit="return editValidate()">
 
-          <div class="modal-body">
+          <div class="modal-body py-0 my-0">
             <div id="errormsg2">
             </div>
             <input type="hidden" name="id" id="sid">
-            <div class="form-group">
-              <label for="ename">Student Name</label>
+            <div class="form-group p-0 m-0">
+              <label for="name">Student Name</label>
               <input type="text" class="form-control px-2" id="ename" name="name" placeholder="Enter Name">
             </div>
-            <div class="form-group">
+            <div class="form-group p-0 m-0">
+              <label for="eemail">Student Email</label>
+              <input type="email" class="form-control px-2" id="eemail" name="email" placeholder="Enter Name">
+            </div>
+            <div class="form-group p-0 m-0">
               <label for="eclasss">class</label>
               <select name="eclasss" id="eclasss" class="form-control" placeholder="Select Class">
                 <option value="0">Select Class</option>
@@ -71,30 +75,30 @@ session_start(); // Start a new session
                 ?>
               </select>
             </div>
-            <div class="form-group">
+            <div class="form-group p-0 m-0">
               <label for="emobile">Student Mobile Number</label>
               <input type="number" class="form-control px-2" id="emobile" name="mobile"
                 placeholder="Enter Mobile number">
             </div>
-            <div class="form-group">
+            <div class="form-group p-0 m-0">
               <label for="eschool">School</label>
               <input type="text" class="form-control px-2" id="eschool" name="school" placeholder="Enter School Name">
             </div>
-            <div class="form-group">
+            <div class="form-group p-0 m-0">
               <label for="eboard">Board</label>
               <input type="text" class="form-control px-2" id="eboard" name="board" placeholder="Enter Board">
             </div>
-            <div class="form-group">
+            <div class="form-group p-0 m-0">
               <label for="eparent">Parent Name</label>
               <input type="text" class="form-control px-2" id="eparent" name="parent" placeholder="Enter Parent Name">
             </div>
-            <div class="form-group">
+            <div class="form-group p-0 m-0">
               <label for="epmobile">Parent Mobile Number</label>
               <input type="number" class="form-control px-2" id="epmobile" name="pmobile"
                 placeholder="Enter Parent Mobile number">
             </div>
           </div>
-          <div class="modal-footer border-top-0 d-flex justify-content-center">
+          <div class="modal-footer border-top-0 d-flex justify-content-center p-0 m-0">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
@@ -241,6 +245,9 @@ session_start(); // Start a new session
                       <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7"
                         style="width: 10%;">
                         Name</th>
+                      <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7"
+                        style="width: 10%;">
+                        Email</th>
                       <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2"
                         style="width: 5%;">
                         Class</th>
@@ -255,13 +262,13 @@ session_start(); // Start a new session
                         style="width: 10%;">
                         Board</th>
                       <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7"
-                        style="width: 20%;">
+                        style="width: 10%;">
                         Parent Name</th>
                       <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7"
                         style="width: 10%;">
                         Parent Mobile Number</th>
                       <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7"
-                        style="width: 30%;">
+                        style="width: 20%;">
                       </th>
                     </tr>
                   </thead>
@@ -283,7 +290,13 @@ session_start(); // Start a new session
                               <?php echo $row["name"]; ?>
                             </h6>
                           </div>
-
+                        </td>
+                        <td class="align-middle text-center">
+                          <div class="d-flex flex-column ">
+                            <h6 class="mb-0 text-sm">
+                              <?php echo $row["email"]; ?>
+                            </h6>
+                          </div>
                         </td>
                         <td class="align-middle text-center">
                           <p class="text-xs font-weight-bold mb-0">
@@ -370,16 +383,20 @@ session_start(); // Start a new session
         <form action="../includes/studata.php" method="POST" enctype="multipart/form-data"
           onsubmit="return formValidate()">
 
-          <div class="modal-body">
+          <div class="modal-body py-0 my-0">
             <div id="errormsg">
 
             </div>
 
-            <div class="form-group">
+            <div class="form-group py-0 my-0">
               <label for="name">Student Name</label>
               <input type="text" class="form-control" id="name" name="name" placeholder="Enter Student Name">
             </div>
-            <div class="form-group">
+            <div class="form-group py-0 my-0">
+              <label for="email">Student Email</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter Student Email">
+            </div>
+            <div class="form-group py-0 my-0">
               <label for="classs">class</label>
               <select name="classs" id="classs" class="form-control" placeholder="Select Class">
                 <option value="0">Select Class</option>
@@ -394,27 +411,27 @@ session_start(); // Start a new session
 
               </select>
             </div>
-            <div class="form-group">
+            <div class="form-group py-0 my-0">
               <label for="mobile">Mobile Number</label>
               <input type="number" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile Number">
             </div>
-            <div class="form-group">
+            <div class="form-group py-0 my-0">
               <label for="school">School</label>
               <input type="text" class="form-control" id="school" name="school" placeholder="Enter School Name">
             </div>
-            <div class="form-group">
+            <div class="form-group py-0 my-0">
               <label for="board">Board</label>
               <input type="text" class="form-control" id="board" name="board" placeholder="Enter Board">
             </div>
-            <div class="form-group">
+            <div class="form-group py-0 my-0">
               <label for="parent">Parent Name</label>
               <input type="text" class="form-control" id="parent" name="parent" placeholder="Enter Parent Name">
             </div>
-            <div class="form-group">
+            <div class="form-group py-0 my-0">
               <label for="pnumber">Parent Number</label>
               <input type="number" class="form-control" id="pnumber" name="pnumber" placeholder="Enter Parent Number">
             </div>
-            <div class=" modal-footer border-top-0 d-flex justify-content-center">
+            <div class=" py-0 my-1 modal-footer border-top-0 d-flex justify-content-center">
               <button type="submit" class="btn btn-primary">Submit</button>
             </div>
           </div>
@@ -459,6 +476,7 @@ session_start(); // Start a new session
   <script>
     const formValidate = () => {
       name = document.getElementById('name');
+      email =document.getElementById('email')
       mobile = document.getElementById('mobile');
       cls = document.getElementById('classs');
       school = document.getElementById('school');
@@ -468,6 +486,11 @@ session_start(); // Start a new session
       if (name.value == "") {
         name.focus();
         document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Name is required</span></div>"
+        return false;
+      }
+      if (email.value == ""){
+        email.focus();
+        document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Email is required</span></div>"
         return false;
       }
       if (mobile.value == "" && mobile.value.length != 10) {
@@ -505,6 +528,7 @@ session_start(); // Start a new session
     function getData(id) {
       const sid = document.getElementById('sid');
       const name = document.getElementById('ename');
+      const email =document.getElementById('eemail')
       const classs = document.getElementById('eclasss');
       const mobile = document.getElementById('emobile');
       const school = document.getElementById('eschool');
@@ -523,6 +547,7 @@ session_start(); // Start a new session
           if (parsedData.length > 0) {
             sid.value = parsedData[0].sid;
             name.value = parsedData[0].name;
+            email.value =parsedData[0].email
             classs.value = parsedData[0].classs;
             mobile.value = parsedData[0].mobile;
             school.value = parsedData[0].school;
@@ -541,6 +566,7 @@ session_start(); // Start a new session
 
     const editValidate = () => {
       const name = document.getElementById('ename');
+      const email =document.getElementById('eemail')
       const classs = document.getElementById('eclasss');
       const mobile = document.getElementById('emobile');
       const school = document.getElementById('eschool');
@@ -550,6 +576,11 @@ session_start(); // Start a new session
       if (name.value == "") {
         name.focus();
         document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Name is required</span></div>"
+        return false;
+      }
+      if (email.value == ""){
+        email.focus();
+        document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Email is required</span></div>"
         return false;
       }
       if (classs.value == "") {
