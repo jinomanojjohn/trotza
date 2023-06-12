@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2023 at 12:38 PM
--- Server version: 10.4.28-MariaDB
+-- Generation Time: Jun 12, 2023 at 12:29 PM
+-- Server version: 10.5.19-MariaDB
 -- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -136,10 +136,16 @@ INSERT INTO `login` (`id`, `username`, `password`, `type`, `status`) VALUES
 CREATE TABLE `mark_child` (
   `mcid` int(11) NOT NULL,
   `markid` int(11) NOT NULL,
-  `subject` int(11) NOT NULL,
-  `mark` int(11) NOT NULL,
-  `tmark` int(11) NOT NULL
+  `sid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `mark_child`
+--
+
+INSERT INTO `mark_child` (`mcid`, `markid`, `sid`) VALUES
+(1, 4, 1),
+(2, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -149,11 +155,43 @@ CREATE TABLE `mark_child` (
 
 CREATE TABLE `mark_master` (
   `markid` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
   `date` date NOT NULL,
   `fid` int(11) NOT NULL,
   `class` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `mark_master`
+--
+
+INSERT INTO `mark_master` (`markid`, `date`, `fid`, `class`) VALUES
+(4, '2023-06-09', 1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mark_subchild`
+--
+
+CREATE TABLE `mark_subchild` (
+  `msid` int(11) NOT NULL,
+  `mcid` int(11) NOT NULL,
+  `subject` int(11) NOT NULL,
+  `mark` int(11) NOT NULL,
+  `tmark` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_general_ci;
+
+--
+-- Dumping data for table `mark_subchild`
+--
+
+INSERT INTO `mark_subchild` (`msid`, `mcid`, `subject`, `mark`, `tmark`) VALUES
+(1, 1, 1, 99, 100),
+(2, 1, 3, 56, 100),
+(3, 1, 4, 30, 100),
+(4, 2, 1, 50, 100),
+(5, 2, 3, 42, 100),
+(6, 2, 4, 30, 100);
 
 -- --------------------------------------------------------
 
@@ -166,6 +204,7 @@ CREATE TABLE `student_data` (
   `name` varchar(100) NOT NULL,
   `class` varchar(100) NOT NULL,
   `mobile` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `school` varchar(100) NOT NULL,
   `board` varchar(100) NOT NULL,
   `pname` varchar(100) NOT NULL,
@@ -176,9 +215,9 @@ CREATE TABLE `student_data` (
 -- Dumping data for table `student_data`
 --
 
-INSERT INTO `student_data` (`sid`, `name`, `class`, `mobile`, `school`, `board`, `pname`, `pmobile`) VALUES
-(1, 'RiyasKH', '2', 2146545135, 'Al Ameen', 'State', 'KH', 2147483647),
-(2, 'Jino Joha', '2', 2147483647, 'Al Ameen School', 'CBSE', 'MANOJ', 2147483647);
+INSERT INTO `student_data` (`sid`, `name`, `class`, `mobile`, `email`, `school`, `board`, `pname`, `pmobile`) VALUES
+(1, 'RiyasKH', '2', 2146545135, '', 'Al Ameen', 'State', 'KH', 2147483647),
+(2, 'Jino Joha', '2', 2147483647, '', 'Al Ameen School', 'CBSE', 'MANOJ', 2147483647);
 
 -- --------------------------------------------------------
 
@@ -198,7 +237,9 @@ CREATE TABLE `subject` (
 
 INSERT INTO `subject` (`subid`, `subname`, `cid`) VALUES
 (1, 'Chemistry', 2),
-(2, 'History', 3);
+(2, 'History', 3),
+(3, 'Physics', 2),
+(4, 'Mathematics', 2);
 
 --
 -- Indexes for dumped tables
@@ -229,10 +270,22 @@ ALTER TABLE `faculty_data`
   ADD PRIMARY KEY (`fid`);
 
 --
+-- Indexes for table `mark_child`
+--
+ALTER TABLE `mark_child`
+  ADD PRIMARY KEY (`mcid`);
+
+--
 -- Indexes for table `mark_master`
 --
 ALTER TABLE `mark_master`
   ADD PRIMARY KEY (`markid`);
+
+--
+-- Indexes for table `mark_subchild`
+--
+ALTER TABLE `mark_subchild`
+  ADD PRIMARY KEY (`msid`);
 
 --
 -- Indexes for table `student_data`
@@ -275,10 +328,22 @@ ALTER TABLE `faculty_data`
   MODIFY `fid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `mark_child`
+--
+ALTER TABLE `mark_child`
+  MODIFY `mcid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `mark_master`
 --
 ALTER TABLE `mark_master`
-  MODIFY `markid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `markid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `mark_subchild`
+--
+ALTER TABLE `mark_subchild`
+  MODIFY `msid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `student_data`
@@ -290,7 +355,7 @@ ALTER TABLE `student_data`
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `subid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
