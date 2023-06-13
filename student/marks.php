@@ -259,8 +259,11 @@ if (isset($_SESSION['LoginStudent'])) {
 
             document.body.innerHTML = printContents;
             window.print();
-
+            
             document.body.innerHTML = originalContents;
+            setTimeout(function() {
+                location.reload();
+           });
         }
     </script>
     <!-- Template Main JS File -->

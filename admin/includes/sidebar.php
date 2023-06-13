@@ -1,6 +1,11 @@
 <?php
 session_start();
-if ($_SESSION['type'] == 'faculty') {
+if (!isset($_SESSION['Login'])) {
+    header('Location: ../../login.php');
+}
+function sideBar($active)
+{
+if ($_SESSION['UserType'] == 'faculty') {
 ?>
     <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
         <div class="sidenav-header">
@@ -14,7 +19,7 @@ if ($_SESSION['type'] == 'faculty') {
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="attendance_list.php">
+                    <a class="nav-link <?php if($active == 'attendance') { echo 'active'; } ?>" href="attendance_list.php">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-app text-info text-sm opacity-10"></i>
                         </div>
@@ -22,7 +27,7 @@ if ($_SESSION['type'] == 'faculty') {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="marks.php">
+                    <a class="nav-link <?php if($active == 'mark') { echo 'active'; } ?>" href="marks.php">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa fa-certificate text-secondary text-sm opacity-10"></i>
                         </div>
@@ -34,7 +39,7 @@ if ($_SESSION['type'] == 'faculty') {
     </aside>
 
 <?php
-} else {
+} elseif ($_SESSION['UserType'] == 'admin') {
 ?>
     <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
         <div class="sidenav-header">
@@ -48,7 +53,7 @@ if ($_SESSION['type'] == 'faculty') {
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="dashboard.php">
+                    <a class="nav-link <?php if($active == 'dashboard') { echo 'active'; } ?>" href="dashboard.php">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
                         </div>
@@ -56,7 +61,7 @@ if ($_SESSION['type'] == 'faculty') {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="faculty_list.php">
+                    <a class="nav-link <?php if($active == 'faculty') { echo 'active'; } ?>" href="faculty_list.php">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa fa-user text-warning text-sm opacity-10"></i>
                         </div>
@@ -64,7 +69,7 @@ if ($_SESSION['type'] == 'faculty') {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="student_list.php">
+                    <a class="nav-link  <?php if($active == 'student') { echo 'active'; } ?>" href="student_list.php">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa fa-users text-success text-sm opacity-10"></i>
                         </div>
@@ -72,7 +77,7 @@ if ($_SESSION['type'] == 'faculty') {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="attendance_list.php">
+                    <a class="nav-link <?php if($active == 'attendance') { echo 'active'; } ?>" href="attendance_list.php">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-app text-info text-sm opacity-10"></i>
                         </div>
@@ -80,7 +85,7 @@ if ($_SESSION['type'] == 'faculty') {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="marks.php">
+                    <a class="nav-link  <?php if($active == 'mark') { echo 'active'; } ?>" href="marks.php">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa fa-certificate text-secondary text-sm opacity-10"></i>
                         </div>
@@ -88,7 +93,7 @@ if ($_SESSION['type'] == 'faculty') {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="fees.php">
+                    <a class="nav-link  <?php if($active == 'fee') { echo 'active'; } ?>" href="fees.php">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa fa-money text-success text-sm opacity-10"></i>
                         </div>
@@ -96,7 +101,7 @@ if ($_SESSION['type'] == 'faculty') {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="class.php">
+                    <a class="nav-link  <?php if($active == 'class') { echo 'active'; } ?>" href="class.php">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa fa-tasks text-info text-sm opacity-10"></i>
                         </div>
@@ -104,7 +109,7 @@ if ($_SESSION['type'] == 'faculty') {
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="subject.php">
+                    <a class="nav-link  <?php if($active == 'subject') { echo 'active'; } ?>" href="subject.php">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="fa fa-book text-primary text-sm opacity-10"></i>
                         </div>
@@ -115,5 +120,5 @@ if ($_SESSION['type'] == 'faculty') {
         </div>
     </aside>
 <?php
-}
+}}
 ?>

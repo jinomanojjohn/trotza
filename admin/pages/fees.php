@@ -1,12 +1,5 @@
 <?php
 include '../includes/connection.php';
-session_start(); // Start a new session
-
-// Check if the user is already logged in
-// if (!isset($_SESSION['admin_loggedin'])) {
-//     header("location: ../admin/"); // Redirect to dashboard if already logged in
-//     exit;
-// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,91 +27,18 @@ session_start(); // Start a new session
 <body class="g-sidenav-show   bg-gray-100">
     <!-- <div class="min-height-150 bg-primary position-absolute w-100"></div> -->
 
-    <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4" id="sidenav-main">
-        <div class="sidenav-header">
-            <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-            <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-                <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold">TROTZA</span>
-            </a>
-        </div>
-        <hr class="horizontal dark mt-0">
-        <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="dashboard.php">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="faculty_list.php">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa fa-user text-warning text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Faculty</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="student_list.php">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa fa-users text-success text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Students</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="attendance.php">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-app text-info text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Attendance</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="marks.php">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa fa-certificate text-secondary text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Mark</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="fees.php">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa fa-money text-success text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Fees</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="class.php">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa fa-tasks text-info text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Class</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="subject.php">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa fa-book text-primary text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Subject</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </aside>
+    <?php include '../includes/sidebar.php';
+    sideBar('fee');
+    ?>
     <main class="main-content position-relative border-radius-lg ">
         <!-- Navbar -->
-        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur"
+            data-scroll="false">
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+                        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a>
+                        </li>
                         <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Fees</li>
                     </ol>
                     <h6 class="font-weight-bolder text-dark mb-0">Fees</h6>
@@ -126,10 +46,23 @@ session_start(); // Start a new session
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <ul class="navbar-nav  ms-md-auto pe-md-3 d-flex align-items-center">
                         <li class="nav-item d-flex align-items-center border-2">
-                            <button onclick="window.location.href='profile.php'" class="btn btn-outline-primary btn-md font-weight-bold  mb-0"><i class="fa fa-user me-sm-1"></i>&nbsp;&nbsp;Profile</button>
+                            <button onclick="window.location.href='profile.php'"
+                                class="btn btn-outline-primary btn-md font-weight-bold  mb-0"><i
+                                    class="fa fa-user me-sm-1"></i>&nbsp;&nbsp;Profile</button>
                         </li>
                         <li class="nav-item d-flex align-items-center bg-danger mx-2 rounded">
-                            <button onclick="window.location.href='logout.php'" class="btn btn-md font-weight-bold text-white mb-0"><i class="fa fa-lock me-sm-1"></i>&nbsp;&nbsp;Logout</button>
+                            <button onclick="window.location.href='logout.php'"
+                                class="btn btn-md font-weight-bold text-white mb-0"><i
+                                    class="fa fa-lock me-sm-1"></i>&nbsp;&nbsp;Logout</button>
+                        </li>
+                        <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                            <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+                                <div class="sidenav-toggler-inner">
+                                    <i class="sidenav-toggler-line bg-dark"></i>
+                                    <i class="sidenav-toggler-line bg-dark"></i>
+                                    <i class="sidenav-toggler-line bg-dark"></i>
+                                </div>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -142,9 +75,11 @@ session_start(); // Start a new session
                     <div class="card mb-4">
 
                         <div class="card-header p-0 position-relative mt-n4 mx-4">
-                            <div class="d-flex justify-content-between bg-gradient-primary shadow-primary border-radius-lg p-3">
+                            <div
+                                class="d-flex justify-content-between bg-gradient-primary shadow-primary border-radius-lg p-3">
                                 <h6 class="text-white ps-3 pt-2 text-uppercase">Fees List</h6>
-                                <button class="btn bg-gradient-dark m-0 toast-btn" type="button" data-toggle="modal" data-target="#form"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add New
+                                <button class="btn bg-gradient-dark m-0 toast-btn" type="button" data-toggle="modal"
+                                    data-target="#form"><i class="fas fa-plus"></i>&nbsp;&nbsp;Add New
                                     Fees</button>
                             </div>
                         </div>
@@ -153,13 +88,17 @@ session_start(); // Start a new session
                                 <table class="align-items-center mb-0 w-100 d-block d-md-table text-sm">
                                     <thead>
                                         <tr>
-                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7" style="width: 10%;">
+                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7"
+                                                style="width: 10%;">
                                                 Date</th>
-                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2" style="width: 40%;">
+                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2"
+                                                style="width: 40%;">
                                                 Student Name</th>
-                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2 th-sm" style="width: 20%;">
+                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2 th-sm"
+                                                style="width: 20%;">
                                                 Amount</th>
-                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7" style="width: 30%;">
+                                            <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7"
+                                                style="width: 30%;">
                                             </th>
                                         </tr>
                                     </thead>
@@ -168,7 +107,7 @@ session_start(); // Start a new session
                                         $query = "SELECT sd.name,f.date,f.amount,f.feid FROM fees f inner join student_data sd on sd.sid = f.sid";
                                         $result = mysqli_query($conn, $query);
                                         while ($row = mysqli_fetch_array($result)) {
-                                        ?>
+                                            ?>
                                             <tr>
                                                 <td class="align-middle text-center">
                                                     <div class="d-flex flex-column ">
@@ -188,15 +127,18 @@ session_start(); // Start a new session
                                                 <td class="align-middle text-center">
                                                     <div class="d-flex flex-column ">
                                                         <h6 class="mb-0 text-sm">
-                                                            ₹ <?php echo $row['amount'] ?>
+                                                            ₹
+                                                            <?php echo $row['amount'] ?>
                                                         </h6>
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-center ">
-                                                    <a class="btn btn-link text-dark px-3 mb-0" href="../includes/deleteFees.php?feid=<?php echo $row['feid'] ?>"><i class="fas fa-trash-alt text-dark me-2"></i>Delete</a>
+                                                    <a class="btn btn-link text-dark px-3 mb-0"
+                                                        href="../includes/deleteFees.php?feid=<?php echo $row['feid'] ?>"><i
+                                                            class="fas fa-trash-alt text-dark me-2"></i>Delete</a>
                                                 </td>
                                             </tr>
-                                        <?php
+                                            <?php
                                         }
                                         ?>
                                     </tbody>
@@ -210,7 +152,8 @@ session_start(); // Start a new session
     </main>
 
     <!-- Modal -->
-    <div class="modal fade" id="form" tabdashboard="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="form" tabdashboard="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header border-bottom-0">
@@ -219,7 +162,8 @@ session_start(); // Start a new session
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="../includes/fees.php" method="POST" enctype="multipart/form-data" onsubmit="return formValidate()">
+                <form action="../includes/fees.php" method="POST" enctype="multipart/form-data"
+                    onsubmit="return formValidate()">
 
                     <div class="modal-body">
                         <div id="errormsg">
@@ -229,14 +173,14 @@ session_start(); // Start a new session
                         <div class="form-group">
                             <label for="sname">Student Name</label>
                             <!-- <input type="text" class="form-control" id="sname" list="names" name="name" placeholder="Enter Student Name" autocomplete="off"> -->
-                            <select id="sname" class="form-control" name="name" >
-                            <option value="0">select Student</option>
+                            <select id="sname" class="form-control" name="name">
+                                <option value="0">select Student</option>
                                 <?php
-                                    $query= "select sid,name from student_data";
-                                    $result = mysqli_query($conn, $query);
-                                    while ($row = mysqli_fetch_array($result)) {
-                                ?>
-                                <option value="<?php echo $row['sid'] ?>"><?php echo $row['name'] ?></option>
+                                $query = "select sid,name from student_data";
+                                $result = mysqli_query($conn, $query);
+                                while ($row = mysqli_fetch_array($result)) {
+                                    ?>
+                                    <option value="<?php echo $row['sid'] ?>"><?php echo $row['name'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -299,7 +243,7 @@ session_start(); // Start a new session
                 document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Amount is required</span></div>"
                 return false;
             }
-            
+
         }
 
     </script>

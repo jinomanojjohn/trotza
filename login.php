@@ -14,15 +14,17 @@ session_start();
           while ($row=mysqli_fetch_array($result)) {
               if ($row["type"]=="admin")
               {
-                  $_SESSION['LoginAdmin']=$row["id"];
+                $_SESSION['LoginTeacher']=$row["id"];
                   $_SESSION['UserType']=$row['type'];
+                  $_SESSION['Login']=true;
                   header('Location: admin/pages/dashboard.php');
               }
               else if ($row["type"]=="faculty")
               {
                   $_SESSION['LoginTeacher']=$row["id"];
                   $_SESSION['UserType']=$row['type'];
-                  header('Location: admin/teacher/index.php');
+                  $_SESSION['Login']=true;
+                  header('Location: admin/pages/attendance_list.php');
               }
               else if ($row["type"]=="student")
               {
@@ -68,6 +70,9 @@ session_start();
     <section>
       <div class="page-header min-vh-100">
         <div class="container">
+        <button onclick="window.location.href='index.php'"
+                class="btn bg-gradient-primary font-weight-bold text-white mb-0"><i
+                    class="fa fa-arrow-left me-sm-1"></i>&nbsp;&nbsp;Home</button>
           <div class="row">
             <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
               <div class="card card-plain">

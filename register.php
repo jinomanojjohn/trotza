@@ -46,6 +46,9 @@ include('admin/includes/connection.php');
               class="col-xl-6 col-lg-6 col-md-12 d-flex h-100 my-auto p-6 position-absolute top-0 end-0 justify-content-center flex-column">
               <div class="card card-plain">
                 <div class="card-header pb-0 mt-3 mb-0 text-start">
+                <button onclick="window.location.href='index.php'"
+                class="btn bg-gradient-primary font-weight-bold text-white mb-0"><i
+                    class="fa fa-arrow-left me-sm-1"></i>&nbsp;&nbsp;Home</button>
                   <h4 class="font-weight-bolder">New Student Registeration</h4>
                   <p class="mb-0">Create your account</p>
                   <p>Already have an account? <a href="login.php" class="font-weight-bold">Log In</a></p>

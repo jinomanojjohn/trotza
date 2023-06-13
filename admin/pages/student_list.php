@@ -1,12 +1,5 @@
 <?php
 include '../includes/connection.php';
-session_start(); // Start a new session
-
-// Check if the user is already logged in
-// if (!isset($_SESSION['admin_loggedin'])) {
-//     header("location: ../admin/"); // Redirect to dashboard if already logged in
-//     exit;
-// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,170 +25,15 @@ session_start(); // Start a new session
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
-  <!-- <div class="min-height-150 bg-primary position-absolute w-100"></div> -->
+  <div class="min-height-150 bg-white position-absolute w-100"></div>
 
   <!-- Modal -->
-  <div class="modal fade" id="edit" tabdashboard="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header border-bottom-0">
-          <h5 class="modal-title" id="exampleModalLabel">Edit Student details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
 
-        <form action="../includes/editstudata.php" method="POST" enctype="multipart/form-data"
-          onsubmit="return editValidate()">
 
-          <div class="modal-body py-0 my-0">
-            <div id="errormsg2">
-            </div>
-            <input type="hidden" name="id" id="sid">
-            <div class="form-group p-0 m-0">
-              <label for="name">Student Name</label>
-              <input type="text" class="form-control px-2" id="ename" name="name" placeholder="Enter Name">
-            </div>
-            <div class="form-group p-0 m-0">
-              <label for="eemail">Student Email</label>
-              <input type="email" class="form-control px-2" id="eemail" name="email" placeholder="Enter Name">
-            </div>
-            <div class="form-group p-0 m-0">
-              <label for="eclasss">class</label>
-              <select name="eclasss" id="eclasss" class="form-control" placeholder="Select Class">
-                <option value="0">Select Class</option>
-                <?php
-                $result1 = mysqli_query($conn, "select * from class");
-                while ($row = mysqli_fetch_array($result1)) {
-                  ?>
-                  <option value="<?php echo $row['cid']; ?>"><?php echo $row['clname']; ?></option>
-                  <?php
-                }
-                ?>
-              </select>
-            </div>
-            <div class="form-group p-0 m-0">
-              <label for="emobile">Student Mobile Number</label>
-              <input type="number" class="form-control px-2" id="emobile" name="mobile"
-                placeholder="Enter Mobile number">
-            </div>
-            <div class="form-group p-0 m-0">
-              <label for="eschool">School</label>
-              <input type="text" class="form-control px-2" id="eschool" name="school" placeholder="Enter School Name">
-            </div>
-            <div class="form-group p-0 m-0">
-              <label for="eboard">Board</label>
-              <input type="text" class="form-control px-2" id="eboard" name="board" placeholder="Enter Board">
-            </div>
-            <div class="form-group p-0 m-0">
-              <label for="eparent">Parent Name</label>
-              <input type="text" class="form-control px-2" id="eparent" name="parent" placeholder="Enter Parent Name">
-            </div>
-            <div class="form-group p-0 m-0">
-              <label for="epmobile">Parent Mobile Number</label>
-              <input type="number" class="form-control px-2" id="epmobile" name="pmobile"
-                placeholder="Enter Parent Mobile number">
-            </div>
-          </div>
-          <div class="modal-footer border-top-0 d-flex justify-content-center p-0 m-0">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+  <?php include '../includes/sidebar.php';
+  sideBar('student');
+  ?>
 
-  <aside
-    class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4"
-    id="sidenav-main">
-    <div class="sidenav-header">
-      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-        aria-hidden="true" id="iconSidenav"></i>
-      <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html "
-        target="_blank">
-        <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-        <span class="ms-1 font-weight-bold">TROTZA</span>
-      </a>
-    </div>
-    <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="dashboard.php">
-            <div
-              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Dashboard</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="faculty_list.php">
-            <div
-              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fa fa-user text-warning text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Faculty</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="student_list.php">
-            <div
-              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fa fa-users text-success text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Students</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="attendance_list.php">
-            <div
-              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="ni ni-app text-info text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Attendance</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="marks.php">
-            <div
-              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fa fa-certificate text-secondary text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Mark</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="fees.php">
-            <div
-              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fa fa-money text-success text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Fees</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="class.php">
-            <div
-              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fa fa-tasks text-info text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Class</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="subject.php">
-            <div
-              class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="fa fa-book text-primary text-sm opacity-10"></i>
-            </div>
-            <span class="nav-link-text ms-1">Subject</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </aside>
   <main class="main-content position-relative border-radius-lg ">
     <!-- Navbar -->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur"
@@ -218,6 +56,15 @@ session_start(); // Start a new session
             <li class="nav-item d-flex align-items-center bg-danger mx-2 rounded">
               <button onclick="window.location.href='logout.php'" class="btn btn-md font-weight-bold text-white mb-0"><i
                   class="fa fa-lock me-sm-1"></i>&nbsp;&nbsp;Logout</button>
+            </li>
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                <i class="sidenav-toggler-line bg-dark"></i>
+                  <i class="sidenav-toggler-line bg-dark"></i>
+                  <i class="sidenav-toggler-line bg-dark"></i>
+                </div>
+              </a>
             </li>
           </ul>
         </div>
@@ -476,7 +323,7 @@ session_start(); // Start a new session
   <script>
     const formValidate = () => {
       name = document.getElementById('name');
-      email =document.getElementById('email')
+      email = document.getElementById('email')
       mobile = document.getElementById('mobile');
       cls = document.getElementById('classs');
       school = document.getElementById('school');
@@ -488,7 +335,7 @@ session_start(); // Start a new session
         document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Name is required</span></div>"
         return false;
       }
-      if (email.value == ""){
+      if (email.value == "") {
         email.focus();
         document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Email is required</span></div>"
         return false;
@@ -528,7 +375,7 @@ session_start(); // Start a new session
     function getData(id) {
       const sid = document.getElementById('sid');
       const name = document.getElementById('ename');
-      const email =document.getElementById('eemail')
+      const email = document.getElementById('eemail')
       const classs = document.getElementById('eclasss');
       const mobile = document.getElementById('emobile');
       const school = document.getElementById('eschool');
@@ -547,15 +394,15 @@ session_start(); // Start a new session
           if (parsedData.length > 0) {
             sid.value = parsedData[0].sid;
             name.value = parsedData[0].name;
-            email.value =parsedData[0].email
+            email.value = parsedData[0].email
             //classs.value = parsedData[0].classs;
             mobile.value = parsedData[0].mobile;
             school.value = parsedData[0].school;
             board.value = parsedData[0].board;
             parent.value = parsedData[0].pname;
             pnumber.value = parsedData[0].pmobile;
-            for(var i, j = 0; i = classs.options[j]; j++) {
-              if(i.value == parsedData[0].class) {
+            for (var i, j = 0; i = classs.options[j]; j++) {
+              if (i.value == parsedData[0].class) {
                 classs.selectedIndex = j;
                 break;
               }
@@ -573,7 +420,7 @@ session_start(); // Start a new session
 
     const editValidate = () => {
       const name = document.getElementById('ename');
-      const email =document.getElementById('eemail')
+      const email = document.getElementById('eemail')
       const classs = document.getElementById('eclasss');
       const mobile = document.getElementById('emobile');
       const school = document.getElementById('eschool');
@@ -585,7 +432,7 @@ session_start(); // Start a new session
         document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Name is required</span></div>"
         return false;
       }
-      if (email.value == ""){
+      if (email.value == "") {
         email.focus();
         document.getElementById('errormsg').innerHTML = "<div class='alert alert-danger text-white' role='alert'><span class='text-sm'>Email is required</span></div>"
         return false;
@@ -623,6 +470,76 @@ session_start(); // Start a new session
     }
 
   </script>
+  <div class="modal fade" id="edit" tabdashboard="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header border-bottom-0">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Student details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <form action="../includes/editstudata.php" method="POST" enctype="multipart/form-data"
+          onsubmit="return editValidate()">
+
+          <div class="modal-body py-0 my-0">
+            <div id="errormsg2">
+            </div>
+            <input type="hidden" name="id" id="sid">
+            <div class="form-group p-0 m-0">
+              <label for="name">Student Name</label>
+              <input type="text" class="form-control px-2" id="ename" name="name" placeholder="Enter Name">
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="eemail">Student Email</label>
+              <input type="email" class="form-control px-2" id="eemail" name="email" placeholder="Enter Name">
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="eclasss">class</label>
+              <select name="eclasss" id="eclasss" class="form-control" placeholder="Select Class">
+                <option value="0">Select Class</option>
+                <?php
+                $result1 = mysqli_query($conn, "select * from class");
+                while ($row = mysqli_fetch_array($result1)) {
+                  ?>
+                  <option value="<?php echo $row['cid']; ?>"><?php echo $row['clname']; ?></option>
+                  <?php
+                }
+                ?>
+              </select>
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="emobile">Student Mobile Number</label>
+              <input type="number" class="form-control px-2" id="emobile" name="mobile"
+                placeholder="Enter Mobile number">
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="eschool">School</label>
+              <input type="text" class="form-control px-2" id="eschool" name="school" placeholder="Enter School Name">
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="eboard">Board</label>
+              <input type="text" class="form-control px-2" id="eboard" name="board" placeholder="Enter Board">
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="eparent">Parent Name</label>
+              <input type="text" class="form-control px-2" id="eparent" name="parent" placeholder="Enter Parent Name">
+            </div>
+            <div class="form-group p-0 m-0">
+              <label for="epmobile">Parent Mobile Number</label>
+              <input type="number" class="form-control px-2" id="epmobile" name="pmobile"
+                placeholder="Enter Parent Mobile number">
+            </div>
+          </div>
+          <div class="modal-footer border-top-0 d-flex justify-content-center p-0 m-0">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

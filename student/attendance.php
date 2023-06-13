@@ -32,7 +32,7 @@ if (isset($_SESSION['LoginStudent'])) {
 
 
     $ad = "SELECT adate FROM attendance_master WHERE adate LIKE '%$selected%' LIMIT 1";
-    $pr = "SELECT ac.status FROM attendance_child ac INNER JOIN attendance_master am ON ac.mid = am.aid WHERE am.adate LIKE '%$selected%' AND ac.sid = '" . $_SESSION['LoginStudent'] . "' LIMIT 1";
+    $pr = "SELECT ac.status FROM attendance_child ac INNER JOIN attendance_master am ON ac.mid = am.aid WHERE am.adate LIKE '%$selected%' AND ac.sid = {$_SESSION['LoginStudent']} LIMIT 1";
     $adate = mysqli_query($conn, $ad);
     $flag = 0;
     if(mysqli_num_rows($adate)>0)

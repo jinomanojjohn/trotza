@@ -1,11 +1,12 @@
 <?php
+session_start();
 include 'connection.php';
 if (!isset($_REQUEST['dt']) && !isset($_REQUEST['class'])) {
     header("location: ../pages/attendance_list.php");
 }
 $date = $_REQUEST['dt'];
 $class = $_REQUEST['class'];
-$query = "insert into attendance_master values(null,'$date',$class,1)"; //last value from session
+$query = "insert into attendance_master values(null,'$date',$class,{$_SESSION['LoginTeacher']})"; //last value from session
 mysqli_query($conn, $query);
 $query1 = "SELECT * from student_data where class='$class'";
 $result1 = mysqli_query($conn, $query1);

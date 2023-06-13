@@ -1,11 +1,12 @@
 <?php
 include 'connection.php';
+session_start();
 if (!isset($_REQUEST['dt']) && !isset($_REQUEST['class'])) {
     header("location: ../pages/marks.php");
 }
 $date = $_REQUEST['dt'];
 $class = $_REQUEST['class'];
-$query = "insert into mark_master(date,fid,class) values('$date',1,$class)";
+$query = "insert into mark_master(date,fid,class) values('$date',{$_SESSION['LoginTeacher']},$class)";
 mysqli_query($conn, $query);
 $query5 = "select max(markid) as mkid from mark_master ";
 $res = mysqli_query($conn, $query5);

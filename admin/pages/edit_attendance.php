@@ -1,12 +1,7 @@
 <?php
 include '../includes/connection.php';
 session_start();
-// Start a new session
-// Check if the user is already logged in
-// if (!isset($_SESSION['admin_loggedin'])) {
-//     header("location: ../admin/"); // Redirect to dashboard if already logged in
-//     exit;
-// }
+
 if (!isset($_REQUEST['dt']) && !isset($_REQUEST['class']) && !isset($_REQUEST['aid'])) {
     header("location: attendance_list.php");
 }

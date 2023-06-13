@@ -1,12 +1,5 @@
 <?php
 include '../includes/connection.php';
-session_start(); // Start a new session
-
-// Check if the user is already logged in
-// if (!isset($_SESSION['admin_loggedin'])) {
-//     header("location: ../admin/"); // Redirect to dashboard if already logged in
-//     exit;
-// }
 ?>
 
 <!DOCTYPE html>
@@ -35,96 +28,9 @@ session_start(); // Start a new session
 <body class="g-sidenav-show   bg-gray-100">
     <!-- <div class="min-height-150 bg-primary position-absolute w-100"></div> -->
 
-    <aside
-        class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4"
-        id="sidenav-main">
-        <div class="sidenav-header">
-            <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-                aria-hidden="true" id="iconSidenav"></i>
-            <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html "
-                target="_blank">
-                <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold">TROTZA</span>
-            </a>
-        </div>
-        <hr class="horizontal dark mt-0">
-        <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="dashboard.php">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="faculty_list.php">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa fa-user text-warning text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Faculty</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="student_list.php">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa fa-users text-success text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Students</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="attendance_list.php">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-app text-info text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Attendance</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="marks.php">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa fa-certificate text-secondary text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Mark</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="fees.php">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa fa-money text-success text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Fees</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="class.php">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa fa-tasks text-info text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Class</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="subject.php">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="fa fa-book text-primary text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Subject</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </aside>
+    <?php include '../includes/sidebar.php';
+    sideBar('mark');
+    ?>
     <main class="main-content position-relative border-radius-lg ">
         <!-- Navbar -->
         <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur"
@@ -149,6 +55,15 @@ session_start(); // Start a new session
                             <button onclick="window.location.href='logout.php'"
                                 class="btn btn-md font-weight-bold text-white mb-0"><i
                                     class="fa fa-lock me-sm-1"></i>&nbsp;&nbsp;Logout</button>
+                        </li>
+                        <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                            <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+                                <div class="sidenav-toggler-inner">
+                                    <i class="sidenav-toggler-line bg-dark"></i>
+                                    <i class="sidenav-toggler-line bg-dark"></i>
+                                    <i class="sidenav-toggler-line bg-dark"></i>
+                                </div>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -190,7 +105,10 @@ session_start(); // Start a new session
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $query = "SELECT mm.markid,mm.date,mm.class,fd.name FROM mark_master mm inner join faculty_data fd on mm.fid=fd.fid";
+                                        $query = "SELECT mm.markid,mm.date,mm.class,fd.name,cl.clname FROM mark_master mm inner join faculty_data fd on mm.fid=fd.fid inner join class cl on mm.class=cl.cid inner join login on mm.fid=login.id WHERE login.type='faculty' or login.type='admin'";
+                                        if($_SESSION['UserType']=='faculty'){
+                                            $query = "SELECT mm.markid,mm.date,mm.class,fd.name,cl.clname FROM mark_master mm inner join faculty_data fd on mm.fid=fd.fid inner join class cl on mm.class=cl.cid WHERE mm.fid={$_SESSION['LoginTeacher']}";
+                                        }
                                         $result = mysqli_query($conn, $query);
                                         while ($row = mysqli_fetch_array($result)) {
                                             ?>
@@ -204,7 +122,7 @@ session_start(); // Start a new session
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <p class="font-weight-bold mb-0">
-                                                        <?php echo $row["class"]; ?>
+                                                        <?php echo $row["clname"]; ?>
                                                     </p>
                                                 </td>
                                                 <td class="align-middle text-center">
@@ -213,9 +131,6 @@ session_start(); // Start a new session
                                                     </p>
                                                 </td>
                                                 <td>
-                                                    <a class="btn btn-link text-dark px-3 mb-0" type="button"
-                                                        href="edit_mark.php?markid=<?php echo $row["markid"]; ?>&dt=<?php echo $row["date"]; ?>&&class=<?php echo $row["class"]; ?>"><i
-                                                            class="fas fa-pencil-alt text-dark me-2"></i>Edit</a>
                                                     <a class="btn btn-link text-dark px-3 mb-0"
                                                         href="view_mark.php?aid=<?php echo $row["markid"]; ?>&dt=<?php echo $row["date"]; ?>&&class=<?php echo $row["class"]; ?>"><i
                                                             class="fas fa-eye text-dark me-2"></i>View</a>
@@ -290,7 +205,8 @@ session_start(); // Start a new session
                         </div>
                         <div class="form-group">
                             <label for="class">Class</label>
-                            <select name="class" id="class" name="class" class="form-control" placeholder="select class">
+                            <select name="class" id="class" name="class" class="form-control"
+                                placeholder="select class">
                                 <option value="0">Select Class</option>
                                 <?php
                                 $result1 = mysqli_query($conn, "select * from class");
