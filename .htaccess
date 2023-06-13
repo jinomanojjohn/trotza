@@ -1,5 +1,2 @@
 RewriteEngine On
-RewriteRule (^|/)assets(/|$) - [F]
-RewriteRule (^|/)css(/|$) - [F]
 RewriteRule (^|/)db(/|$) - [F]
-RewriteRule (^|/)js(/|$) - [F]
