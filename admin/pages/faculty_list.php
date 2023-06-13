@@ -26,8 +26,6 @@ include '../includes/connection.php';
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
-  <!-- <div class="min-height-150 bg-primary position-absolute w-100"></div> -->
-
   <!-- Modal -->
   <div class="modal fade" id="edit" tabdashboard="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">

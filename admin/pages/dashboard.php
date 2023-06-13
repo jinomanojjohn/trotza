@@ -1,21 +1,6 @@
 <?php
 include '../includes/connection.php';
 ?>
-
-<!--
-=========================================================
-* Argon Dashboard 2 - v2.0.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -101,7 +86,6 @@ include '../includes/connection.php';
                       ?>
                     </h5>
                     <p class="mb-0">
-                      <!-- <span class="text-success text-sm font-weight-bolder">+55%</span> -->
                       Total Number of Faculty
                     </p>
                   </div>
@@ -131,7 +115,6 @@ include '../includes/connection.php';
                       ?>
                     </h5>
                     <p class="mb-0">
-                      <!-- <span class="text-success text-sm font-weight-bolder">+3%</span> -->
                       Total Number of Student
                     </p>
                   </div>
@@ -161,7 +144,6 @@ include '../includes/connection.php';
                       ?>
                     </h5>
                     <p class="mb-0">
-                      <!-- <span class="text-danger text-sm font-weight-bolder">-2%</span> -->
                       Total Classes
                     </p>
                   </div>
@@ -191,7 +173,6 @@ include '../includes/connection.php';
                       ?>
                     </h5>
                     <p class="mb-0">
-                      <!-- <span class="text-success text-sm font-weight-bolder">+5%</span>  -->
                       Total Number of Subjects
                     </p>
                   </div>

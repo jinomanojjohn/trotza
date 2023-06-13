@@ -30,6 +30,7 @@ session_start();
               {
                   $_SESSION['LoginStudent']=$row['id'];
                   $_SESSION['UserType']=$row['type'];
+                  $_SESSION['Login']=false;
                   header('Location: index.php');
               }
           }

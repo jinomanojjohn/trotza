@@ -35,27 +35,25 @@ if (isset($_SESSION['LoginStudent'])) {
     $pr = "SELECT ac.status FROM attendance_child ac INNER JOIN attendance_master am ON ac.mid = am.aid WHERE am.adate LIKE '%$selected%' AND ac.sid = {$_SESSION['LoginStudent']} LIMIT 1";
     $adate = mysqli_query($conn, $ad);
     $flag = 0;
-    if(mysqli_num_rows($adate)>0)
-    {
+    if (mysqli_num_rows($adate) > 0) {
         $flag = 1;
         $date = mysqli_fetch_array($adate);
         $atdate = $date['adate'];
-    }
-    else
-    {
+    } else {
         $flag = 0;
     }
     $present = mysqli_query($conn, $pr);
-    if(mysqli_num_rows($present)>0){
-    $status = mysqli_fetch_array($present);
-    $atstatus = $status[0];
-    if ($atstatus == 1) {
-        $atstatus = "Present";
-    } else {
-        $atstatus = "Absent";
+    if (mysqli_num_rows($present) > 0) {
+        $status = mysqli_fetch_array($present);
+        $atstatus = $status[0];
+        if ($atstatus == 1) {
+            $atstatus = "Present";
+        } else {
+            $atstatus = "Absent";
+        }
     }
-
-}
+    $query3 = "SELECT * FROM attendance_master WHERE adate LIKE '%$selected%'";
+    $result3 = mysqli_query($conn, $query3);
     ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -143,39 +141,37 @@ if (isset($_SESSION['LoginStudent'])) {
                     </div>
                 </div>
                 <?php
-                if($flag == 0 && isset($_GET['month']))
-                {
+                if ($flag == 0 && isset($_GET['month'])) {
                     echo '<br>';
                     echo '<div class="alert alert-danger" role="alert">No attendance found for this month!</div>';
                 }
                 ?>
                 <?php
-                if (mysqli_num_rows($adate)>0)
-                {
-                echo '<div class="row mt-4">';
-                echo '<div class="col-lg-8">';
-                echo '<h4>Attendance Summary for ' . $selected . '</h4>';
-                echo '<table class="table table-striped">';
-                echo '<tr>';
-                echo '<th>Total Working Days</th>';
-                echo '<td>' . $atttotal . '</td>';
-                echo '</tr>';
-                echo '<tr>';
-                echo '<th>Total Present Days</th>';
-                echo '<td>' . $attpresent . '</td>';
-                echo '</tr>';
-                echo '<tr>';
-                echo '<th>Percentage</th>';
-                echo '<td>' . $attpercent . '%</td>';
-                echo '</tr>';
-                echo '</table>';
-                echo '</div>';
-                echo '</div>';
-                ?>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#AttModal">
-                    View Daily Attendance
-                </button>
-                <?php
+                if (mysqli_num_rows($adate) > 0) {
+                    echo '<div class="row mt-4">';
+                    echo '<div class="col-lg-8">';
+                    echo '<h4>Attendance Summary for ' . $selected . '</h4>';
+                    echo '<table class="table table-striped">';
+                    echo '<tr>';
+                    echo '<th>Total Working Days</th>';
+                    echo '<td>' . $atttotal . '</td>';
+                    echo '</tr>';
+                    echo '<tr>';
+                    echo '<th>Total Present Days</th>';
+                    echo '<td>' . $attpresent . '</td>';
+                    echo '</tr>';
+                    echo '<tr>';
+                    echo '<th>Percentage</th>';
+                    echo '<td>' . $attpercent . '%</td>';
+                    echo '</tr>';
+                    echo '</table>';
+                    echo '</div>';
+                    echo '</div>';
+                    ?>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#AttModal">
+                        View Daily Attendance
+                    </button>
+                    <?php
                 }
                 ?>
             </div>
@@ -190,25 +186,28 @@ if (isset($_SESSION['LoginStudent'])) {
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Daily Attendance for
                         <?php
-                        $ab=strtotime($selected);
-                        echo date('F, Y',$ab); ?>
+                        $ab = strtotime($selected);
+                        echo date('F, Y', $ab); ?>
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <?php
-                    echo '<table class="table table-striped">';
-                    echo '<tr>';
-                    echo '<th>Date</th>';
-                    echo '<th>Attendance</th>';
-                    echo '</tr>';
-                    echo '<tr>';
-                    echo '<td>'.$atdate.'</td>';
-                    echo '<td>'.$atstatus.'</td>';
-                    echo '</table>';
-                    // echo '<script>console.log("'.$adate.'");</script>';
-                    // echo '<script>console.log("'.$present.'");</script>';
-                    ?>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Date</th>
+                            <th>Attendance</th>
+                        </tr>
+                        <?php
+                        while ($row3 = mysqli_fetch_array($result3)) {
+                            echo '<tr>';
+                            echo '<td>' . $atdate . '</td>';
+                            echo '<td>' . $atstatus . '</td>';
+                            echo '</tr>';
+                            // echo '<script>alert("' . $atdate . '")</script>';
+                            // echo '<script>alert("' . $atstatus . '")</script>';
+                        }
+                        ?>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

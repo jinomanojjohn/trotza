@@ -25,7 +25,6 @@ include '../includes/connection.php';
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
-    <!-- <div class="min-height-150 bg-primary position-absolute w-100"></div> -->
 
     <?php include '../includes/sidebar.php';
     sideBar('fee');
@@ -172,7 +171,6 @@ include '../includes/connection.php';
 
                         <div class="form-group">
                             <label for="sname">Student Name</label>
-                            <!-- <input type="text" class="form-control" id="sname" list="names" name="name" placeholder="Enter Student Name" autocomplete="off"> -->
                             <select id="sname" class="form-control" name="name">
                                 <option value="0">select Student</option>
                                 <?php
