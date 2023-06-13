@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 12, 2023 at 12:29 PM
--- Server version: 10.5.19-MariaDB
+-- Generation Time: Jun 13, 2023 at 07:48 PM
+-- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -40,7 +40,9 @@ CREATE TABLE `attendance_child` (
 
 INSERT INTO `attendance_child` (`acid`, `sid`, `mid`, `status`) VALUES
 (1, 1, 1, 1),
-(2, 2, 1, 0);
+(2, 2, 1, 0),
+(19, 1, 10, 1),
+(20, 2, 10, 0);
 
 -- --------------------------------------------------------
 
@@ -60,7 +62,8 @@ CREATE TABLE `attendance_master` (
 --
 
 INSERT INTO `attendance_master` (`aid`, `adate`, `class`, `fid`) VALUES
-(1, '2023-06-06', 2, 1);
+(1, '2023-06-06', 2, 1),
+(10, '2023-06-13', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -101,8 +104,29 @@ CREATE TABLE `faculty_data` (
 --
 
 INSERT INTO `faculty_data` (`fid`, `name`, `email`, `mobile`) VALUES
+(0, 'Admin', 'admin123@gmail.com', 1234567890),
 (1, 'Jino John', 'jinojohn@gmail.com', 9845628496),
 (2, 'Riyas', 'riyas123@gmail.com', 9845628498);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `fees`
+--
+
+CREATE TABLE `fees` (
+  `feid` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `fees`
+--
+
+INSERT INTO `fees` (`feid`, `sid`, `amount`, `date`) VALUES
+(1, 1, 2500.00, '2023-06-13');
 
 -- --------------------------------------------------------
 
@@ -124,8 +148,9 @@ CREATE TABLE `login` (
 
 INSERT INTO `login` (`id`, `username`, `password`, `type`, `status`) VALUES
 (2, 'riyas123@gmail.com', 'abc', 'faculty', 1),
-(1, '9823351842', '2146545135', 'student', 1),
-(2, '9845628498', '9845628498', 'student', 1);
+(1, 'riyas123@gmail.com', '2146545135', 'student', 1),
+(2, 'jinojohn@gmail.com', '9845628498', 'student', 1),
+(0, 'admin123@gmail.com', 'Trotza@123@admin', 'admin', 1);
 
 -- --------------------------------------------------------
 
@@ -145,7 +170,13 @@ CREATE TABLE `mark_child` (
 
 INSERT INTO `mark_child` (`mcid`, `markid`, `sid`) VALUES
 (1, 4, 1),
-(2, 4, 2);
+(2, 4, 2),
+(3, 5, 1),
+(4, 5, 2),
+(5, 6, 1),
+(6, 6, 2),
+(7, 7, 1),
+(8, 7, 2);
 
 -- --------------------------------------------------------
 
@@ -165,7 +196,10 @@ CREATE TABLE `mark_master` (
 --
 
 INSERT INTO `mark_master` (`markid`, `date`, `fid`, `class`) VALUES
-(4, '2023-06-09', 1, 2);
+(4, '2023-06-09', 1, 2),
+(5, '2023-06-13', 0, 2),
+(6, '2023-06-07', 0, 2),
+(7, '2023-06-13', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -186,12 +220,24 @@ CREATE TABLE `mark_subchild` (
 --
 
 INSERT INTO `mark_subchild` (`msid`, `mcid`, `subject`, `mark`, `tmark`) VALUES
-(1, 1, 1, 99, 100),
-(2, 1, 3, 56, 100),
-(3, 1, 4, 30, 100),
-(4, 2, 1, 50, 100),
-(5, 2, 3, 42, 100),
-(6, 2, 4, 30, 100);
+(7, 3, 1, 88, 100),
+(8, 3, 3, 78, 100),
+(9, 3, 4, 98, 100),
+(10, 4, 1, 87, 100),
+(11, 4, 3, 95, 100),
+(12, 4, 4, 64, 100),
+(13, 5, 1, 85, 100),
+(14, 5, 3, 58, 100),
+(15, 5, 4, 69, 100),
+(16, 6, 1, 96, 100),
+(17, 6, 3, 85, 100),
+(18, 6, 4, 58, 100),
+(19, 7, 1, 79, 100),
+(20, 7, 3, 98, 100),
+(21, 7, 4, 97, 100),
+(22, 8, 1, 87, 100),
+(23, 8, 3, 89, 100),
+(24, 8, 4, 88, 100);
 
 -- --------------------------------------------------------
 
@@ -216,8 +262,8 @@ CREATE TABLE `student_data` (
 --
 
 INSERT INTO `student_data` (`sid`, `name`, `class`, `mobile`, `email`, `school`, `board`, `pname`, `pmobile`) VALUES
-(1, 'RiyasKH', '2', 2146545135, '', 'Al Ameen', 'State', 'KH', 2147483647),
-(2, 'Jino Joha', '2', 2147483647, '', 'Al Ameen School', 'CBSE', 'MANOJ', 2147483647);
+(1, 'RiyasKH', '2', 2146545135, 'riyas123@gmail.com', 'Al Ameen', 'State', 'KH', 2147483647),
+(2, 'Jino Joha', '2', 2147483647, 'jinojohn@gmail.com', 'Al Ameen School', 'CBSE', 'MANOJ', 2147483647);
 
 -- --------------------------------------------------------
 
@@ -270,6 +316,12 @@ ALTER TABLE `faculty_data`
   ADD PRIMARY KEY (`fid`);
 
 --
+-- Indexes for table `fees`
+--
+ALTER TABLE `fees`
+  ADD PRIMARY KEY (`feid`);
+
+--
 -- Indexes for table `mark_child`
 --
 ALTER TABLE `mark_child`
@@ -307,13 +359,13 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `attendance_child`
 --
 ALTER TABLE `attendance_child`
-  MODIFY `acid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `acid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `attendance_master`
 --
 ALTER TABLE `attendance_master`
-  MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `aid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `class`
@@ -325,25 +377,31 @@ ALTER TABLE `class`
 -- AUTO_INCREMENT for table `faculty_data`
 --
 ALTER TABLE `faculty_data`
-  MODIFY `fid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `fid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `fees`
+--
+ALTER TABLE `fees`
+  MODIFY `feid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `mark_child`
 --
 ALTER TABLE `mark_child`
-  MODIFY `mcid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `mcid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `mark_master`
 --
 ALTER TABLE `mark_master`
-  MODIFY `markid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `markid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `mark_subchild`
 --
 ALTER TABLE `mark_subchild`
-  MODIFY `msid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `msid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `student_data`
