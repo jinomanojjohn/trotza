@@ -88,24 +88,30 @@ include '../includes/connection.php';
                                     <thead>
                                         <tr>
                                             <th class="text-center text-uppercase text-secondary font-weight-bolder opacity-7"
-                                                style="width: 25%;">
+                                                style="width: 16.67%;">
                                                 Date</th>
                                             <th class="text-center text-uppercase text-secondary font-weight-bolder opacity-7 ps-2"
-                                                style="width: 25%;">
+                                                style="width: 16.67%;">
                                                 Class</th>
                                             <th class="text-center text-uppercase text-secondary font-weight-bolder opacity-7 ps-2 th-sm"
-                                                style="width: 25%;">
+                                                style="width: 16.67%;">
                                                 Faculty</th>
+                                            <th class="text-center text-uppercase text-secondary font-weight-bolder opacity-7 ps-2 th-sm"
+                                                style="width: 16.67%;">
+                                                Subject</th>
+                                            <th class="text-center text-uppercase text-secondary font-weight-bolder opacity-7 ps-2 th-sm"
+                                                style="width: 16.67%;">
+                                                Total Mark</th>
                                             <th class="text-center text-uppercase text-secondary font-weight-bolder opacity-7"
-                                                style="width: 25%;">
+                                                style="width: 16.67%;">
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $query = "SELECT mm.markid,mm.date,mm.class,fd.name,cl.clname FROM mark_master mm inner join faculty_data fd on mm.fid=fd.fid inner join class cl on mm.class=cl.cid inner join login on mm.fid=login.id WHERE login.type='faculty' or login.type='admin'";
-                                        if($_SESSION['UserType']=='faculty'){
-                                            $query = "SELECT mm.markid,mm.date,mm.class,fd.name,cl.clname FROM mark_master mm inner join faculty_data fd on mm.fid=fd.fid inner join class cl on mm.class=cl.cid WHERE mm.fid={$_SESSION['LoginTeacher']}";
+                                        $query = "SELECT mm.markid,mm.date,mm.class,fd.name,cl.clname, mm.total, sb.subname FROM mark_master mm inner join faculty_data fd on mm.fid=fd.fid inner join class cl on mm.class=cl.cid inner join login on mm.fid=login.id inner join subject sb on mm.subject=sb.subid WHERE login.type='faculty' or login.type='admin'";
+                                        if ($_SESSION['UserType'] == 'faculty') {
+                                            $query = "SELECT mm.markid,mm.date,mm.class,fd.name,cl.clname, mm.total, sb.subname FROM mark_master mm inner join faculty_data fd on mm.fid=fd.fid inner join class cl on mm.class=cl.cid inner join subject sb on mm.subject=sb.subid WHERE mm.fid={$_SESSION['LoginTeacher']}";
                                         }
                                         $result = mysqli_query($conn, $query);
                                         while ($row = mysqli_fetch_array($result)) {
@@ -126,6 +132,18 @@ include '../includes/connection.php';
                                                 <td class="align-middle text-center">
                                                     <p class="font-weight-bold mb-0">
                                                         <?php echo $row["name"]; ?>
+                                                    </p>
+                                                </td>
+                                                
+                                                <td class="align-middle text-center">
+                                                    <p class="font-weight-bold mb-0">
+                                                        <?php echo $row["subname"]; ?>
+                                                    </p>
+                                                </td>
+                                                
+                                                <td class="align-middle text-center">
+                                                    <p class="font-weight-bold mb-0">
+                                                        <?php echo $row["total"]; ?>
                                                     </p>
                                                 </td>
                                                 <td>

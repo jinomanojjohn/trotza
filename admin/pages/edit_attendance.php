@@ -52,6 +52,11 @@ $class = $_REQUEST['class'];
         </nav>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
+        <div class="mb-5">
+            <button onclick="window.location.href='../pages/attendance_list.php'"
+                class="btn bg-gradient-primary font-weight-bold text-white mb-0"><i
+                    class="fa fa-arrow-left me-sm-1"></i>&nbsp;&nbsp;Back</button>
+            </div>
             <form action="../includes/edit_attendance.php" method="POST">
                 <div class="row">
                     <div class="col-12">

@@ -103,7 +103,7 @@ if (isset($_SESSION['LoginStudent'])) {
                         <li><a href="../index.php">Home</a></li>
                         <li><a class="active" href="../student/attendance.php">Attendance</a></li>
                         <li><a href="../student/marks.php">Marks</a></li>
-
+                    </ul>
                         <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
 

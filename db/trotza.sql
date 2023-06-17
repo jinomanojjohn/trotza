@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 13, 2023 at 07:48 PM
+-- Generation Time: Jun 14, 2023 at 05:08 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -169,14 +169,8 @@ CREATE TABLE `mark_child` (
 --
 
 INSERT INTO `mark_child` (`mcid`, `markid`, `sid`) VALUES
-(1, 4, 1),
-(2, 4, 2),
-(3, 5, 1),
-(4, 5, 2),
 (5, 6, 1),
-(6, 6, 2),
-(7, 7, 1),
-(8, 7, 2);
+(6, 6, 2);
 
 -- --------------------------------------------------------
 
@@ -196,10 +190,7 @@ CREATE TABLE `mark_master` (
 --
 
 INSERT INTO `mark_master` (`markid`, `date`, `fid`, `class`) VALUES
-(4, '2023-06-09', 1, 2),
-(5, '2023-06-13', 0, 2),
-(6, '2023-06-07', 0, 2),
-(7, '2023-06-13', 2, 2);
+(6, '2023-06-07', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -220,24 +211,12 @@ CREATE TABLE `mark_subchild` (
 --
 
 INSERT INTO `mark_subchild` (`msid`, `mcid`, `subject`, `mark`, `tmark`) VALUES
-(7, 3, 1, 88, 100),
-(8, 3, 3, 78, 100),
-(9, 3, 4, 98, 100),
-(10, 4, 1, 87, 100),
-(11, 4, 3, 95, 100),
-(12, 4, 4, 64, 100),
 (13, 5, 1, 85, 100),
 (14, 5, 3, 58, 100),
 (15, 5, 4, 69, 100),
 (16, 6, 1, 96, 100),
 (17, 6, 3, 85, 100),
-(18, 6, 4, 58, 100),
-(19, 7, 1, 79, 100),
-(20, 7, 3, 98, 100),
-(21, 7, 4, 97, 100),
-(22, 8, 1, 87, 100),
-(23, 8, 3, 89, 100),
-(24, 8, 4, 88, 100);
+(18, 6, 4, 58, 100);
 
 -- --------------------------------------------------------
 
@@ -295,7 +274,8 @@ INSERT INTO `subject` (`subid`, `subname`, `cid`) VALUES
 -- Indexes for table `attendance_child`
 --
 ALTER TABLE `attendance_child`
-  ADD PRIMARY KEY (`acid`);
+  ADD PRIMARY KEY (`acid`),
+  ADD KEY `mid` (`mid`);
 
 --
 -- Indexes for table `attendance_master`
@@ -325,7 +305,8 @@ ALTER TABLE `fees`
 -- Indexes for table `mark_child`
 --
 ALTER TABLE `mark_child`
-  ADD PRIMARY KEY (`mcid`);
+  ADD PRIMARY KEY (`mcid`),
+  ADD KEY `markid` (`markid`);
 
 --
 -- Indexes for table `mark_master`
@@ -337,7 +318,8 @@ ALTER TABLE `mark_master`
 -- Indexes for table `mark_subchild`
 --
 ALTER TABLE `mark_subchild`
-  ADD PRIMARY KEY (`msid`);
+  ADD PRIMARY KEY (`msid`),
+  ADD KEY `mcid` (`mcid`);
 
 --
 -- Indexes for table `student_data`
@@ -414,6 +396,28 @@ ALTER TABLE `student_data`
 --
 ALTER TABLE `subject`
   MODIFY `subid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `attendance_child`
+--
+ALTER TABLE `attendance_child`
+  ADD CONSTRAINT `attendance_child_ibfk_1` FOREIGN KEY (`mid`) REFERENCES `attendance_master` (`aid`);
+
+--
+-- Constraints for table `mark_child`
+--
+ALTER TABLE `mark_child`
+  ADD CONSTRAINT `mark_child_ibfk_1` FOREIGN KEY (`markid`) REFERENCES `mark_master` (`markid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `mark_subchild`
+--
+ALTER TABLE `mark_subchild`
+  ADD CONSTRAINT `mark_subchild_ibfk_1` FOREIGN KEY (`mcid`) REFERENCES `mark_child` (`mcid`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

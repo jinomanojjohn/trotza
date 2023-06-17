@@ -32,7 +32,7 @@ $class = $_REQUEST['class'];
     <!-- CSS Files -->
     <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
     <style>
-        .txtinp{
+        .txtinp {
             border: none;
             border-radius: 5px;
             width: 45px;
@@ -45,15 +45,20 @@ $class = $_REQUEST['class'];
 <body class="g-sidenav-show   bg-gray-100">
     <main class="main-content position-relative border-radius-lg ">
         <!-- Navbar -->
-        <nav class="navbar navbar-main navbar-expand-lg shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+        <nav class="navbar navbar-main navbar-expand-lg shadow-none border-radius-xl " id="navbarBlur"
+            data-scroll="false">
             <div class="container-fluid">
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <ul class="navbar-nav  ms-md-auto pe-md-3 d-flex align-items-center">
                         <li class="nav-item d-flex align-items-center border-2">
-                            <button onclick="window.location.href='profile.php'" class="btn btn-outline-primary btn-md font-weight-bold  mb-0"><i class="fa fa-user me-sm-1"></i>&nbsp;&nbsp;Profile</button>
+                            <button onclick="window.location.href='profile.php'"
+                                class="btn btn-outline-primary btn-md font-weight-bold  mb-0"><i
+                                    class="fa fa-user me-sm-1"></i>&nbsp;&nbsp;Profile</button>
                         </li>
                         <li class="nav-item d-flex align-items-center bg-danger mx-2 rounded">
-                            <button onclick="window.location.href='logout.php'" class="btn btn-md font-weight-bold text-white mb-0"><i class="fa fa-lock me-sm-1"></i>&nbsp;&nbsp;Logout</button>
+                            <button onclick="window.location.href='logout.php'"
+                                class="btn btn-md font-weight-bold text-white mb-0"><i
+                                    class="fa fa-lock me-sm-1"></i>&nbsp;&nbsp;Logout</button>
                         </li>
                     </ul>
                 </div>
@@ -61,50 +66,69 @@ $class = $_REQUEST['class'];
         </nav>
         <!-- End Navbar -->
         <div class="container-fluid py-4">
-            <form action="../includes/addmark.php" method="POST">
+            <form action="../includes/addmark.php" method="POST" onsubmit="return formValidate()">
                 <div class="row">
                     <div class="col-12">
                         <div class="card mb-4">
                             <div class="card-header p-0 position-relative mt-n4">
-                                <div class="d-flex justify-content-between bg-gradient-primary shadow-primary border-radius-lg p-3">
+                                <div
+                                    class="d-flex justify-content-between bg-gradient-primary shadow-primary border-radius-lg p-3">
                                     <h6 class="text-white ps-3 pt-2 text-uppercase">Add Mark</h6>
-                                    
-                                    <button class="btn bg-gradient-success m-0 toast-btn text-dark" type="submit">submit</button>
+
+                                    <button class="btn bg-gradient-success m-0 toast-btn text-dark"
+                                        type="submit">Submit</button>
+                                </div>
+                            </div>
+                            <div class="row px-3">
+                                <div class="col-3">
+                                    <label for="sub">Subject</label>
+                                    <select class="form-select" name="sub" id="selectV" aria-label="Default select example" required>
+                                        <option selected value="0">Select Subject</option>
+                                        <?php
+                                        $query = "SELECT * from subject where cid='$class'";
+                                        $result = mysqli_query($conn, $query);
+                                        while ($row = mysqli_fetch_array($result)) {
+                                            ?>
+                                            <option value="<?php echo $row['subid'] ?>"><?php echo $row['subname'] ?>
+                                            </option>
+                                            <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-1">
+                                    <label for="sub">Total Mark</label>
+                                    <input type="text" class="form-control" name='total' placeholder="Total"
+                                        maxlength="3" required value="100">
                                 </div>
                             </div>
                             <div class="card-body px-0 pt-3 pb-2">
                                 <div class="table-responsive p-0">
-                                    <table class="table table-striped align-items-center w-100 d-block d-md-table text-sm rounded">
-                                        <thead >
+                                    <table
+                                        class="table table-striped align-items-center w-100 d-block d-md-table text-sm rounded">
+                                        <thead>
                                             <tr class="bg-dark">
-                                                <th class="text-center text-uppercase text-white font-weight-bolder nowrap" style="width: 15%;">
+                                                <th class="text-center text-uppercase text-white font-weight-bolder nowrap"
+                                                    style="width: 33.3%;">
                                                     Sl No</th>
-                                                <th class="text-center text-uppercase text-white font-weight-bolder nowrap " style="width: 15%;">
+                                                <th class="text-center text-uppercase text-white font-weight-bolder nowrap "
+                                                    style="width: 33.3%;">
                                                     Student Name</th>
-                                                    <?php
-                                                        $query = "SELECT * from subject where cid='$class'";
-                                                        $result = mysqli_query($conn, $query);
-                                            
-                                                        while ($row = mysqli_fetch_array($result)) {
-                                                        
-                                            ?>
-                                                <th class="text-center text-uppercase text-white font-weight-bolder nowrap" style="width: 15%;">
-                                                    <?php echo $row['subname'] ?>
-                                                    <input type="text" class="txtinp" name='t<?php echo $row['subid']?>' placeholder="Total" maxlength="3" required value="100">
+                                                <th class="text-center text-uppercase text-white font-weight-bolder nowrap"
+                                                    style="width: 33.3%;">
                                                 </th>
-                                            <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <input type="hidden" value="<?php echo $date?>" name="dt">
-                                            <input type="hidden" value="<?php echo $class?>" name="class">
+                                            <input type="hidden" value="<?php echo $date ?>" name="dt">
+                                            <input type="hidden" value="<?php echo $class ?>" name="class">
                                             <?php
                                             $query = "SELECT * from student_data where class='$class'";
                                             $result = mysqli_query($conn, $query);
-                                            $i=0;
+                                            $i = 0;
                                             while ($row = mysqli_fetch_array($result)) {
                                                 $i++;
-                                            ?>
+                                                ?>
                                                 <tr style="background-color: #ddd;">
                                                     <td class="align-middle text-center">
                                                         <div class="d-flex flex-column ">
@@ -116,19 +140,14 @@ $class = $_REQUEST['class'];
                                                     <td class="align-middle text-center nowrap font-weight-bolder mb-0 ">
                                                         <?php echo $row["name"]; ?>
                                                     </td>
-                                                    <?php
-                                                        $query1 = "SELECT * from subject where cid='$class'";
-                                                        $result1 = mysqli_query($conn, $query1);
-                                            
-                                                        while ($row1 = mysqli_fetch_array($result1)) {
-                                                        
-                                            ?>
-                                                <td class="align-middle text-center nowrap font-weight-bolder mb-0  ">
-                                                    <input type="text" class="txtinp" name='s<?php echo $row['sid']?>m<?php echo $row1['subid']?>' placeholder="Mark" maxlength="5" required>
-                                                </td>
-                                            <?php } ?>
+                                                    <td class="align-middle text-center">
+                                                        <input type="text" class="txtinp" name="mark[]"
+                                                            placeholder="Mark" maxlength="3" required>
+                                                        <input type="hidden" name="sid[]"
+                                                            value="<?php echo $row['sid'] ?>">
+                                                    </td>
                                                 </tr>
-                                            <?php
+                                                <?php
                                             }
                                             ?>
                                         </tbody>
@@ -176,6 +195,13 @@ $class = $_REQUEST['class'];
 
     <script>
         // document.getElementById('atdate').value = Date();
+        const formValidate = () => {
+            const cls = document.getElementById('selectV');
+            if (cls.value == 0) {
+                alert("Please Select Class")
+                return false;
+            }
+        }
 
         function getData(id) {
             const name = document.getElementById('ename');
@@ -190,7 +216,7 @@ $class = $_REQUEST['class'];
                 data: {
                     id: id
                 },
-                success: function(data) {
+                success: function (data) {
                     var parsedData = JSON.parse(data);
                     if (parsedData.length > 0) {
                         fid.value = parsedData[0].fid;
@@ -203,15 +229,15 @@ $class = $_REQUEST['class'];
                         console.log("No data found for the specified ID.");
                     }
                 },
-                error: function() {
+                error: function () {
                     console.log("Error occurred during the AJAX request.");
                 }
             });
         }
     </script>
     <script>
-        $(function() {
-            $(".txtinp").on('input', function(e) {
+        $(function () {
+            $(".txtinp").on('input', function (e) {
                 $(this).val($(this).val().replace(/[^0-9]/g, ''));
             });
         });

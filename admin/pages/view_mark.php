@@ -9,8 +9,12 @@ $class = $_REQUEST['class'];
 $markid = $_REQUEST['aid'];
 $res = mysqli_query($conn, "select clname from class where cid = $class");
 $rw = mysqli_fetch_array($res);
-$classname = $rw["clname"]
-    ?>
+$classname = $rw["clname"];
+$res1 = mysqli_query($conn, "select mm.subject, sb.subname, mm.total from mark_master mm inner join subject sb on mm.subject=sb.subid where mm.markid = $markid");
+$rw1 = mysqli_fetch_array($res1);
+$subject = $rw1["subname"];
+$total = $rw1["total"];
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -88,7 +92,19 @@ $classname = $rw["clname"]
                                 </h6>
                             </div>
                         </div>
-                        <div class="card-body px-0 pt-3 pb-2">
+                        <div class="row justify-content-between pt-1">
+                            <div class="col-6 text-center">
+                                <h5 class="text-primary ps-3 pt-2 text-uppercase">
+                                    <?php echo $subject ?>
+                                </h5>
+                            </div>
+                            <div class="col-6 text-center">
+                                <h5 class="text-primary ps-3 pt-2 text-uppercase">Total-
+                                    <?php echo $total ?>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pt-1 pb-2">
                             <div class="table-responsive p-0">
                                 <table
                                     class="table table-striped align-items-center w-100 d-block d-md-table text-sm rounded">
@@ -100,25 +116,17 @@ $classname = $rw["clname"]
                                             <th class="text-center text-uppercase text-white font-weight-bolder nowrap "
                                                 style="width: 15%;">
                                                 Student Name</th>
-                                            <?php
-                                            $query = "SELECT * from subject where cid='$class'";
-                                            $result = mysqli_query($conn, $query);
-
-                                            while ($row = mysqli_fetch_array($result)) {
-
-                                                ?>
-                                                <th class="text-center text-uppercase text-white font-weight-bolder nowrap"
-                                                    style="width: 15%;">
-                                                    <?php echo $row['subname'] ?>
-                                                </th>
-                                            <?php } ?>
+                                            <th class="text-center text-uppercase text-white font-weight-bolder nowrap"
+                                                style="width: 15%;">
+                                                Mark
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <input type="hidden" value="<?php echo $date ?>" name="dt">
                                         <input type="hidden" value="<?php echo $class ?>" name="class">
                                         <?php
-                                        $query = "SELECT mc.mcid, mc.sid, sd.name from mark_child mc inner join mark_master mm on mc.markid=mm.markid inner join student_data sd on mc.sid=sd.sid where mm.markid='$markid'";
+                                        $query = "SELECT mc.mcid, mc.sid, sd.name, mm.total, mc.mark, mm.subject, subject.subname from mark_child mc inner join mark_master mm on mc.markid=mm.markid inner join student_data sd on mc.sid=sd.sid inner join subject on mm.subject=subject.subid where mm.markid='$markid'";
                                         $result = mysqli_query($conn, $query);
                                         $i = 0;
                                         while ($row = mysqli_fetch_array($result)) {
@@ -135,23 +143,12 @@ $classname = $rw["clname"]
                                                 <td class="align-middle text-center nowrap font-weight-bolder mb-0 ">
                                                     <?php echo $row["name"]; ?>
                                                 </td>
-                                                <?php
-                                                $sid = $row['sid'];
-                                                $mcid = $row['mcid'];
-                                                $query1 = "SELECT * from mark_subchild ms inner join mark_child mc on mc.mcid=ms.mcid inner join subject s on s.subid=ms.subject where mc.sid=$sid and ms.mcid=$mcid";
-                                                $result1 = mysqli_query($conn, $query1);
-                                                while ($row1 = mysqli_fetch_array($result1)) {
-
-                                                    ?>
-                                                    <td class="align-middle text-center nowrap font-weight-bolder mb-0  ">
-                                                        <?php echo $row1["mark"] . "/" . $row1["tmark"] ?>
-                                                        <i class="fas fa-pencil-alt text-dark me-2 cursor-pointer"
-                                                            data-toggle="modal" data-target="#form"
-                                                            onclick="setData(<?php echo $row1['msid'] ?>,<?php echo $row1['mark'] ?>,'<?php echo $row1['subname'] ?>')"></i>
-                                                    </td>
-
-
-                                                <?php } ?>
+                                                <td class="align-middle text-center nowrap font-weight-bolder mb-0  ">
+                                                    <?php echo $row["mark"] ?>
+                                                    <i class="fas fa-pencil-alt text-dark me-2 cursor-pointer"
+                                                        data-toggle="modal" data-target="#form"
+                                                        onclick="setData(<?php echo $row['mcid'] ?>,<?php echo $row['mark'] ?>,'<?php echo $row['subname'] ?>')"></i>
+                                                </td>
                                             </tr>
                                             <?php
                                         }
@@ -180,7 +177,8 @@ $classname = $rw["clname"]
                         <div class="form-group">
                             <input type="hidden" value="<?php echo $date ?>" name="dt">
                             <input type="hidden" value="<?php echo $class ?>" name="class">
-                            <input type="hidden" id="msid" name="msid">
+                            <input type="hidden" id="mcid" name="mcid">
+                            <input type="hidden" value="<?php echo $markid ?>" name="aid">
                             <input type="text" class="form-control" id="markw" name="mark" required>
                         </div>
                         <div class="modal-footer border-top-0 d-flex justify-content-center">
@@ -228,7 +226,7 @@ $classname = $rw["clname"]
         function setData(id, value, sub) {
             const mark = document.getElementById('markw');
             const heading = document.getElementById('modalhead');
-            const ids = document.getElementById('msid');
+            const ids = document.getElementById('mcid');
             mark.value = value;
             heading.innerHTML = sub;
             ids.value = id;

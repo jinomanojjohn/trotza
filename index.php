@@ -17,7 +17,9 @@ session_start();
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
@@ -29,79 +31,79 @@ session_start();
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
+  <link href="admin/assets/css/style.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
 
 </head>
 
 <body>
-<?php
-if(isset($_SESSION['LoginStudent'])){
-?>
-<!-- ======= Header ======= -->
-<header id="header" class="fixed-top">
-    <div class="container d-flex align-items-center">
+  <?php
+  if (isset($_SESSION['LoginStudent'])) {
+    ?>
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top">
+      <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.php">TROTZA</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.php" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> -->
+        <h1 class="logo me-auto"><a href="index.php">TROTZA</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.php" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> -->
 
-      <nav id="navbar" class="navbar order-last order-lg-0">
-        <ul>
-          <li><a class="active" href="index.php">Home</a></li>
-          <li><a href="student/attendance.php">Attendance</a></li>
-          <li><a href="student/marks.php">Marks</a></li>
-          
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+        <nav id="navbar" class="navbar order-last order-lg-0">
+          <ul>
+            <li><a class="active" href="index.php">Home</a></li>
+            <li><a href="student/attendance.php">Attendance</a></li>
+            <li><a href="student/marks.php">Marks</a></li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
 
-      <a href="logout.php" class="get-started-btn">Logout</a>
+        </nav><!-- .navbar -->
 
-    </div>
-  </header><!-- End Header -->
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex justify-content-center align-items-center">
-    <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
-      <h1>Learning Today,<br>Leading Tomorrow</h1>
-      <h2>We are team of talented designers making websites with Bootstrap</h2>
-      <a href="courses.html" class="btn-get-started">Get Started</a>
-    </div>
-  </section><!-- End Hero -->
-<?php 
-}
-else
-{
-?>
-<!-- ======= Header ======= -->
-<header id="header" class="fixed-top">
-    <div class="container d-flex align-items-center">
+        <a href="logout.php" class="get-started-btn">Logout</a>
 
-      <h1 class="logo me-auto"><a href="index.php">TROTZA</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.php" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> -->
+      </div>
+    </header><!-- End Header -->
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex justify-content-center align-items-center">
+      <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
+        <h1>Learning Today,<br>Leading Tomorrow</h1>
+        <h2>We are team of talented designers making websites with Bootstrap</h2>
+        <a href="login.php" class="btn-get-started">Get Started</a>
+      </div>
+    </section><!-- End Hero -->
 
-      <nav id="navbar" class="navbar order-last order-lg-0">
-        <ul>
-          <li><a class="active" href="index.php">Home</a></li>
+    <?php
+  } else {
+    ?>
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top">
+      <div class="container d-flex align-items-center">
 
-          
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
+        <h1 class="logo me-auto"><a href="index.php">TROTZA</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.php" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> -->
 
-      <a href="login.php" class="get-started-btn">Student Login</a>
+        <nav id="navbar" class="navbar order-last order-lg-0">
+          <ul>
+            <li><a class="active" href="index.php">Home</a></li>
+          </ul>
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
 
-    </div>
-  </header><!-- End Header -->
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex justify-content-center align-items-center">
-    <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
-      <h1>Learning Today,<br>Leading Tomorrow</h1>
-      <h2>We are team of talented designers making websites with Bootstrap</h2>
-      <a href="courses.html" class="btn-get-started">Get Started</a>
-    </div>
-  </section><!-- End Hero -->
-<?php
-}
-?>
+        <a href="login.php" class="get-started-btn">Student Login</a>
+
+      </div>
+    </header><!-- End Header -->
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex justify-content-center align-items-center">
+      <div class="container position-relative" data-aos="zoom-in" data-aos-delay="100">
+        <h1>Learning Today,<br>Leading Tomorrow</h1>
+        <h2>We are team of talented designers making websites with Bootstrap</h2>
+        <a href="login.php" class="btn-get-started">Get Started</a>
+      </div>
+    </section><!-- End Hero -->
+    <?php
+  }
+  ?>
   <!-- Vendor JS Files -->
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>

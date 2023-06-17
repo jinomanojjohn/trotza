@@ -5,7 +5,7 @@ session_start();
 if (isset($_SESSION['LoginStudent'])) {
     $roll = $_SESSION['LoginStudent'];
     $flag = 0;
-    $query3 = "SELECT * FROM mark_child mc INNER JOIN mark_master mm ON mc.markid = mm.markid INNER JOIN mark_subchild ms ON mc.mcid = ms.mcid WHERE mc.sid = '$roll'";
+    $query3 = "SELECT * FROM mark_master mm INNER JOIN mark_child mc ON mm.markid = mc.markid WHERE mc.sid = $roll";
     $result3 = mysqli_query($conn, $query3);
     if (mysqli_num_rows($result3) > 0) {
         $flag = 1;
@@ -61,7 +61,7 @@ if (isset($_SESSION['LoginStudent'])) {
                         <li><a href="../index.php">Home</a></li>
                         <li><a href="../student/attendance.php">Attendance</a></li>
                         <li><a class="active" href="../student/marks.php">Marks</a></li>
-
+                    </ul>
                         <i class="bi bi-list mobile-nav-toggle"></i>
                 </nav><!-- .navbar -->
 
@@ -97,31 +97,34 @@ if (isset($_SESSION['LoginStudent'])) {
                             <table class="table table-striped">
                                 <tr>
                                     <th>Exam Date</th>
+                                    <th>Subject</th>
                                     <th>Obtained Marks</th>
                                     <th>Total Marks</th>
                                     <th>Percentage</th>
                                     <th></th>
                                 </tr>
                                 <?php
-                                $query3 = "SELECT * FROM mark_child mc INNER JOIN mark_master mm ON mc.markid = mm.markid INNER JOIN mark_subchild ms ON mc.mcid = ms.mcid WHERE mc.sid = '$roll'";
+                                $query3 = "SELECT * FROM mark_master mm INNER JOIN mark_child mc ON mm.markid = mc.markid WHERE mc.sid = $roll";
                                 $result3 = mysqli_query($conn, $query3);
-                                $obtained = 0;
-                                $total = 0;
-                                while ($row = mysqli_fetch_assoc($result3)) {
-                                    $mark1 = $row['mark'];
-                                    $obtained += $mark1;
+                                while ($row8 = mysqli_fetch_assoc($result3)) {
+                                    $obtained = 0;
+                                    $total = 0;
+                                    $percentage = 0;
+                                    $query4 = "SELECT * FROM mark_subchild WHERE mcid = {$row8['mcid']}";
+                                    $result4 = mysqli_query($conn, $query4);
+                                    while ($row9 = mysqli_fetch_assoc($result4)) {
+                                        $mark1 = $row9['mark'];
+                                        $obtained += $mark1;
 
-                                    $mark2 = $row['tmark'];
-                                    $total += $mark2;
+                                        $mark2 = $row9['tmark'];
+                                        $total += $mark2;
 
-                                    $date = $row['date'];
-                                }
-
-                                $percentage = 0;
-                                if ($total != 0) {
-                                    $per = ($obtained / $total) * 100;
-                                    $percentage = number_format($per, 2);
-                                } {
+                                    }
+                                    $date = $row8['date'];
+                                    if ($total != 0) {
+                                        $per = ($obtained / $total) * 100;
+                                        $percentage = number_format($per, 2);
+                                    }
                                     ?>
 
                                     <tr>
@@ -139,13 +142,16 @@ if (isset($_SESSION['LoginStudent'])) {
                                         <td>
                                             <?php echo $percentage; ?>%
                                         </td>
-                                        <td><button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                        <td><button
+                                                onclick="getMark('<?php echo $date; ?>',<?php echo $roll; ?>,<?php echo $percentage; ?>,<?php echo $obtained; ?>,<?php echo $total; ?>)"
+                                                type="button" class="btn btn-success" data-bs-toggle="modal"
                                                 data-bs-target="#AttModal">
                                                 View Report Card
                                             </button></td>
                                     </tr>
                                     <?php
                                 }
+                                
                                 ?>
                             </table>
                             <?php
@@ -160,79 +166,8 @@ if (isset($_SESSION['LoginStudent'])) {
     </main><!-- End #main -->
     <!-- Modal -->
     <div class="modal fade" id="AttModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Report Card of
-                        <?php
-                        $ab = strtotime($date);
-                        echo date('D d, F, Y', $ab); ?> Exam
-                    </h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body mt-2">
-                    <h5>Student Name:&nbsp;<strong>
-                            <?php
-                            $query5 = "SELECT * FROM student_data WHERE sid = '$roll'";
-                            $result5 = mysqli_query($conn, $query5);
-                            $row5 = mysqli_fetch_assoc($result5);
-                            echo $row5['name'];
-                            ?>
-                        </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Class:&nbsp;<strong>
-                            <?php
-                            $query5 = "SELECT * FROM student_data sd INNER JOIN class ON sd.class = class.cid WHERE sid = '$roll'";
-                            $result5 = mysqli_query($conn, $query5);
-                            $row5 = mysqli_fetch_assoc($result5);
-                            echo $row5['clname'];
-                            ?>
-                        </strong></h5>
-                    <table class="table table-striped mt-4">
-                        <tr>
-                            <th>Subject</th>
-                            <th>Marks Obtained</th>
-                            <th>Out Of</th>
-                        </tr>
-                        <?php
-                        $query4 = "SELECT * FROM mark_child mc INNER JOIN mark_master mm ON mc.markid = mm.markid INNER JOIN mark_subchild ms ON mc.mcid = ms.mcid INNER JOIN subject sb ON ms.subject = sb.subid WHERE mc.sid = '$roll'";
-                        $result4 = mysqli_query($conn, $query4);
-                        while ($row1 = mysqli_fetch_assoc($result4)) {
-                            ?>
-                            <tr>
-                                <td>
-                                    <?php echo $row1['subname'] ?>
-                                </td>
-                                <td>
-                                    <?php echo $row1['mark'] ?>
-                                </td>
-                                <td>
-                                    <?php echo $row1['tmark'] ?>
-                                </td>
-                            </tr>
-                            <?php
-                        }
-                        ?>
-                        <tr>
-                            <th>Total:</th>
-                            <th>
-                                <?php echo $obtained ?>
-                            </th>
-                            <th>
-                                <?php echo $total ?>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <th>Percentage:</th>
-                            <th>
-                                <?php echo $percentage ?>%
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="printModal()">Print</button>
-                </div>
-            </div>
+        <div class="modal-dialog modal-dialog-centered modal-lg" id="innerData">
+
         </div>
     </div>
 
@@ -242,6 +177,16 @@ if (isset($_SESSION['LoginStudent'])) {
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="../assets/vendor/php-email-form/validate.js"></script>
+
+
+    <!-- Modal scripts -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js">
+    </script>
 
     <script>
         function printModal() {
@@ -259,15 +204,33 @@ if (isset($_SESSION['LoginStudent'])) {
 
             document.body.innerHTML = printContents;
             window.print();
-            
+
             document.body.innerHTML = originalContents;
-            setTimeout(function() {
+            setTimeout(function () {
                 location.reload();
-           });
+            });
         }
     </script>
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
+    <script>
+        function getMark(date, roll, percentage, obtained, total) {
+            $.ajax({
+                url: "getMark.php",
+                type: "POST",
+                data: {
+                    date: date,
+                    roll: roll,
+                    percentage: percentage,
+                    obtained: obtained,
+                    total: total
+                },
+                success: function (data) {
+                    document.getElementById("innerData").innerHTML = data;
+                }
+            });
+        }
+    </script>
 
 </body>
 
