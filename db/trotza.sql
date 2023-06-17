@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2023 at 05:08 PM
+-- Generation Time: Jun 17, 2023 at 09:45 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -161,16 +161,21 @@ INSERT INTO `login` (`id`, `username`, `password`, `type`, `status`) VALUES
 CREATE TABLE `mark_child` (
   `mcid` int(11) NOT NULL,
   `markid` int(11) NOT NULL,
-  `sid` int(11) NOT NULL
+  `sid` int(11) NOT NULL,
+  `mark` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `mark_child`
 --
 
-INSERT INTO `mark_child` (`mcid`, `markid`, `sid`) VALUES
-(5, 6, 1),
-(6, 6, 2);
+INSERT INTO `mark_child` (`mcid`, `markid`, `sid`, `mark`) VALUES
+(5, 6, 1, 0),
+(6, 6, 2, 0),
+(9, 9, 1, 54),
+(10, 9, 2, 65),
+(11, 10, 1, 68),
+(12, 10, 2, 89);
 
 -- --------------------------------------------------------
 
@@ -182,41 +187,19 @@ CREATE TABLE `mark_master` (
   `markid` int(11) NOT NULL,
   `date` date NOT NULL,
   `fid` int(11) NOT NULL,
-  `class` int(11) NOT NULL
+  `class` int(11) NOT NULL,
+  `subject` int(10) NOT NULL,
+  `total` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `mark_master`
 --
 
-INSERT INTO `mark_master` (`markid`, `date`, `fid`, `class`) VALUES
-(6, '2023-06-07', 0, 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `mark_subchild`
---
-
-CREATE TABLE `mark_subchild` (
-  `msid` int(11) NOT NULL,
-  `mcid` int(11) NOT NULL,
-  `subject` int(11) NOT NULL,
-  `mark` int(11) NOT NULL,
-  `tmark` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_general_ci;
-
---
--- Dumping data for table `mark_subchild`
---
-
-INSERT INTO `mark_subchild` (`msid`, `mcid`, `subject`, `mark`, `tmark`) VALUES
-(13, 5, 1, 85, 100),
-(14, 5, 3, 58, 100),
-(15, 5, 4, 69, 100),
-(16, 6, 1, 96, 100),
-(17, 6, 3, 85, 100),
-(18, 6, 4, 58, 100);
+INSERT INTO `mark_master` (`markid`, `date`, `fid`, `class`, `subject`, `total`) VALUES
+(6, '2023-06-07', 0, 2, 0, 0),
+(9, '2023-06-17', 0, 2, 1, 100),
+(10, '2023-06-17', 0, 2, 3, 100);
 
 -- --------------------------------------------------------
 
@@ -315,13 +298,6 @@ ALTER TABLE `mark_master`
   ADD PRIMARY KEY (`markid`);
 
 --
--- Indexes for table `mark_subchild`
---
-ALTER TABLE `mark_subchild`
-  ADD PRIMARY KEY (`msid`),
-  ADD KEY `mcid` (`mcid`);
-
---
 -- Indexes for table `student_data`
 --
 ALTER TABLE `student_data`
@@ -371,19 +347,13 @@ ALTER TABLE `fees`
 -- AUTO_INCREMENT for table `mark_child`
 --
 ALTER TABLE `mark_child`
-  MODIFY `mcid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `mcid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `mark_master`
 --
 ALTER TABLE `mark_master`
-  MODIFY `markid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `mark_subchild`
---
-ALTER TABLE `mark_subchild`
-  MODIFY `msid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `markid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `student_data`
@@ -412,12 +382,6 @@ ALTER TABLE `attendance_child`
 --
 ALTER TABLE `mark_child`
   ADD CONSTRAINT `mark_child_ibfk_1` FOREIGN KEY (`markid`) REFERENCES `mark_master` (`markid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `mark_subchild`
---
-ALTER TABLE `mark_subchild`
-  ADD CONSTRAINT `mark_subchild_ibfk_1` FOREIGN KEY (`mcid`) REFERENCES `mark_child` (`mcid`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

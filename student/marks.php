@@ -132,12 +132,6 @@ if (isset($_SESSION['LoginStudent'])) {
 
 
     </main><!-- End #main -->
-    <!-- Modal -->
-    <div class="modal fade" id="AttModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" id="innerData">
-
-        </div>
-    </div>
 
     <!-- Vendor JS Files -->
     <script src="../assets/vendor/purecounter/purecounter_vanilla.js"></script>
@@ -145,60 +139,8 @@ if (isset($_SESSION['LoginStudent'])) {
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="../assets/vendor/php-email-form/validate.js"></script>
-
-
-    <!-- Modal scripts -->
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js">
-    </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js">
-    </script>
-
-    <script>
-        function printModal() {
-            var printContents = document.getElementById("AttModal").innerHTML;
-            var originalContents = document.body.innerHTML;
-
-            // Remove the print button from the modal content
-            var tempContainer = document.createElement("div");
-            tempContainer.innerHTML = printContents;
-            var printButton = tempContainer.querySelector(".btn-primary");
-            if (printButton) {
-                printButton.parentNode.removeChild(printButton);
-            }
-            printContents = tempContainer.innerHTML;
-
-            document.body.innerHTML = printContents;
-            window.print();
-
-            document.body.innerHTML = originalContents;
-            setTimeout(function () {
-                location.reload();
-            });
-        }
-    </script>
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>
-    <script>
-        function getMark(date, roll, percentage, obtained, total) {
-            $.ajax({
-                url: "getMark.php",
-                type: "POST",
-                data: {
-                    date: date,
-                    roll: roll,
-                    percentage: percentage,
-                    obtained: obtained,
-                    total: total
-                },
-                success: function (data) {
-                    document.getElementById("innerData").innerHTML = data;
-                }
-            });
-        }
-    </script>
 
 </body>
 
