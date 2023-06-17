@@ -96,62 +96,30 @@ if (isset($_SESSION['LoginStudent'])) {
                             ?>
                             <table class="table table-striped">
                                 <tr>
-                                    <th>Exam Date</th>
-                                    <th>Subject</th>
-                                    <th>Obtained Marks</th>
-                                    <th>Total Marks</th>
-                                    <th>Percentage</th>
-                                    <th></th>
+                                    <th class="text-center">Exam Date</th>
+                                    <th class="text-center">Subject</th>
+                                    <th class="text-center">Obtained Marks</th>
+                                    <th class="text-center">Total Marks</th>
+                                    <th class="text-center">Percentage</th>
                                 </tr>
                                 <?php
-                                $query3 = "SELECT * FROM mark_master mm INNER JOIN mark_child mc ON mm.markid = mc.markid WHERE mc.sid = $roll";
+                                $query3 = "SELECT * FROM mark_master mm INNER JOIN mark_child mc ON mm.markid = mc.markid inner join subject sb on mm.subject=sb.subid WHERE mc.sid = $roll";
                                 $result3 = mysqli_query($conn, $query3);
-                                while ($row8 = mysqli_fetch_assoc($result3)) {
-                                    $obtained = 0;
-                                    $total = 0;
-                                    $percentage = 0;
-                                    $query4 = "SELECT * FROM mark_subchild WHERE mcid = {$row8['mcid']}";
-                                    $result4 = mysqli_query($conn, $query4);
-                                    while ($row9 = mysqli_fetch_assoc($result4)) {
-                                        $mark1 = $row9['mark'];
-                                        $obtained += $mark1;
-
-                                        $mark2 = $row9['tmark'];
-                                        $total += $mark2;
-
-                                    }
-                                    $date = $row8['date'];
-                                    if ($total != 0) {
-                                        $per = ($obtained / $total) * 100;
-                                        $percentage = number_format($per, 2);
-                                    }
+                                while ($row3 = mysqli_fetch_assoc($result3)) { 
+                                    $percentage = ($row3['mark'] / $row3['total']) * 100;
                                     ?>
-
                                     <tr>
-                                        <td>
-                                            <?php
+                                        <td class="text-center"><?php
+                                            $date = $row3['date'];
                                             $ab = strtotime($date);
-                                            echo date('D d, F, Y', $ab); ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $obtained; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $total; ?>
-                                        </td>
-                                        <td>
-                                            <?php echo $percentage; ?>%
-                                        </td>
-                                        <td><button
-                                                onclick="getMark('<?php echo $date; ?>',<?php echo $roll; ?>,<?php echo $percentage; ?>,<?php echo $obtained; ?>,<?php echo $total; ?>)"
-                                                type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                data-bs-target="#AttModal">
-                                                View Report Card
-                                            </button></td>
+                                            echo date('D d, F, Y', $ab); ?></td>
+                                        <td class="text-center"><?php echo $row3['subname']; ?></td>
+                                        <td class="text-center"><?php echo $row3['mark']; ?></td>
+                                        <td class="text-center"><?php echo $row3['total']; ?></td>
+                                        <td class="text-center"><?php echo $percentage; ?>%</td>
                                     </tr>
-                                    <?php
+                                <?php
                                 }
-                                
                                 ?>
                             </table>
                             <?php
