@@ -54,7 +54,7 @@ include('admin/includes/connection.php');
                   <p>Already have an account? <a href="login.php" class="font-weight-bold">Log In</a></p>
                 </div>
                 <div class="card-body">
-                  <form action="admin/includes/studata.php" method="POST" enctype="multipart/form-data"
+                  <form action="admin/includes/registerstudata.php" method="POST" enctype="multipart/form-data"
                     onsubmit="return formValidate()">
 
                     <div class="modal-body my-0 py-0">
